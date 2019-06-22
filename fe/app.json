@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/ask/index/index",
+    "pages/answer/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FEE801",
+    "navigationBarTitleText": "朋友说",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<view class="public-top">
+  <view class='public-top_bg'></view>
+  <view class='user-card_all'>
+    <view class='user-card_bg user-card_bg1'></view>
+    <view class='user-card_bg user-card_bg2'></view>
+    <view class='user-card_bg user-card'>
+      <view class='user-info'>
+        <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
+      </view>
+      <text class='question_ask'>{{question}}</text>
+      <text class='tips'>此问题更合适发送给{{sendTo}}</text>
+      <button class='public-btn bg-white'>更换问题</button>
+    </view>
+  </view>
+  <view class='public-bottom'>
+    <button class='public-btn bg-yellow'>去问朋友</button>
+    <navigator class='public_link'>有好点子，给我们提意见</navigator>
+  </view>
+</view>
