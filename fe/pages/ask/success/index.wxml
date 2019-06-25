@@ -1,0 +1,21 @@
+<view class="public-top">
+  <view class='public-top_bg bg-green'></view>
+  <view class='send_success_warn'>
+    <icon type='success' size='40'></icon>
+    <text class='success_tip'>答案成功发送给Ta啦</text>
+  </view>
+  <view class='success-middle'>
+    <icon type='waiting' size='24'></icon>
+    <text class='ucanask-title'>你也来问个问题吧~</text>
+  </view>
+  <view class='user-card_all success_question'>
+    <view class='user-card_bg user-card_bg1'></view>
+    <view class='user-card_bg user-card_bg2'></view>
+    <view class='user-card_bg user-card pt30'>
+      <text class='question_ask'>{{question}}</text>
+    </view>
+  </view>
+</view>
+<view>
+  <button class='public-btn bg-yellow'>去提问</button>
+</view>

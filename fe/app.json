@@ -1,7 +1,10 @@
 {
   "pages": [
-    "pages/ask/index/index",
-    "pages/answer/index/index"
+    "pages/ask/recevieDetail/index",
+    "pages/ask/receive/index",
+    "pages/ask/success/index",
+    "pages/answer/index/index",
+    "pages/ask/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

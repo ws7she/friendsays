@@ -1,2 +1,45 @@
 <!--pages/answer/index/index.wxml-->
-<text>pages/answer/index/index.wxml</text>
+<view class="public-top ask-pt80 {{moreRelation ? 'noOverFlow' : ''}}">
+  <view class='user-card_all'>
+    <view class='user-card_bg user-card'>
+      <view class='user-info'>
+        <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
+      </view>
+      <text class='ask_title'>{{friend_name}}向你提问</text>
+      <text class='question_ask'>{{question}}</text>
+    </view>
+  </view>
+  <view class='user-card_all ask-pt30'>
+    <view class='user-card_bg ask-card'>
+      <textarea class='ask-textarea' placeholder='请输入你的答案、放心、对方并不知道你是谁，但是请务必谨言慎行，避免涉政涉黄涉恐，一经发现，将用永远封禁！最多150字。' maxlength='150'></textarea>
+    </view>
+    <view class='ask-relation'>
+      <text class='relation_title'>您与Ta的关系线索是：</text>
+      <view class='relation-list'>
+        <view class='relation-list_item'>
+          <view class='relation_icon selected' wx:for='{{relation_list}}' wx:key='{{item.key}}'>{{item.value}}</view>
+          <view class='relation_icon' bindtap='showMore'> 更多标签</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='send_answer'>
+    <label class='checkbox_label'>
+      <checkbox class='checkbox'></checkbox>
+      将此线索提供给Ta
+    </label>
+    <button class='public-btn bg-yellow'>发送答案</button>
+  </view>
+</view>
+<view class='cover' wx:if='{{moreRelation}}' bindtap='chooseRelation'></view>
+<view class='relation-more' wx:if='{{moreRelation}}'>
+  <view class='relation-list'>
+    <view class='relation-list_item'>
+      <view class='relation_icon ' wx:for='{{relation_list}}' wx:key='{{item.key}}'>{{item.value}}</view>
+    </view>
+    <view class='relation-list_item'>
+      <view class='relation_icon ' wx:for='{{relation_list1}}' wx:key='{{item.key}}'>{{item.value}}</view>
+    </view>
+  </view>
+  <button class='public-btn bg-yellow' bindtap='chooseRelation'>确认选择</button>
+</view>

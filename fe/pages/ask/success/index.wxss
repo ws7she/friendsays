@@ -1,0 +1,27 @@
+/**index.wxss**/
+.send_success_warn {
+  position: absolute;
+  left: 50%;
+  top: 20rpx;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.success_tip {
+  color: #fff;
+  font-size: 14px;
+  display: block;
+  text-align: center;
+  padding-top: 16rpx;
+}
+.success-middle {
+  text-align: center;
+  padding-top: 60rpx;
+}
+.ucanask-title {
+  display: block;
+  font-size: 12px;
+}
+.success_question {
+  margin-top: 100rpx;
+  margin-bottom: 80rpx;
+}

@@ -26,7 +26,7 @@
   padding-bottom: 40rpx;
 }
 .tips {
-  display: block;
+  display:6block;
   text-align: center;
   font-size: 24rpx;
   color: #C0C0C0;
@@ -37,6 +37,7 @@
   background-color: #fff;
   font-size: 16px;
   border: 1px solid #D8D8D8;
+  width: 60vw;
 }
 .bg-white {
   background-color: #fff;
@@ -50,6 +51,9 @@
   background-color: #F1F1F1;
   border-color: #F1F1F1;
 }
+.bg-green::after {
+  background-color: #6AC967;
+}
 .public-bottom {
   padding-top: 100rpx;
   width: 60vw;
@@ -62,4 +66,91 @@
   border-bottom: 1px solid #5DC9FF;
   margin: 30rpx auto 0;
   width: 136px;
+}
+.user-info {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -90rpx;
+  border: 20rpx bolid #fff;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+.user-photo {
+  width: 180rpx;
+  height: 180rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+.user-card {
+  position: relative;
+  width: 70vw;
+}
+.user-card_bg {
+  border-radius: 40rpx;
+  box-shadow: 0 0 10rpx 10rpx #F0F0F0;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 160rpx 60rpx 60rpx 60rpx;
+}
+.user-card_bg1 {
+  width:45vw;
+  height: 10vw;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -60rpx;
+}
+.user-card_bg2 {
+  width: 58vw;
+  height: 10vw;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -30rpx;
+  
+}
+.user-card_all {
+  position: relative;
+}
+.ask-pt80 {
+  padding-top: 160rpx;
+}
+.ask-pt30 {
+  padding-top: 60rpx;
+}
+.cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  opacity: 0.5;
+  z-index: 9;
+}
+checkbox {
+  width: 40rpx;
+  height: 40rpx;
+}
+checkbox .wx-checkbox-input {
+  width: 30rpx;
+  height: 30rpx;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: #00A6FF;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  width: 28rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+.pt30 {
+  padding-top: 60rpx;
 }
