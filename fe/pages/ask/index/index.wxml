@@ -10,11 +10,11 @@
       </view>
       <text class='question_ask'>{{question}}</text>
       <text class='tips'>此问题更合适发送给{{sendTo}}</text>
-      <button class='public-btn bg-white'>更换问题</button>
+      <button class='public-btn bg-white' bindtap='getQuestion'>更换问题</button>
     </view>
   </view>
   <view class='public-bottom'>
-    <button class='public-btn bg-yellow'>去问朋友</button>
+    <button class='public-btn bg-yellow' open-type="share">去问朋友</button>
     <navigator class='public_link'>有好点子，给我们提意见</navigator>
   </view>
 </view>

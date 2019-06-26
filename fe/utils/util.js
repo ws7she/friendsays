@@ -13,7 +13,23 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-
+const requestApi = (urlparams, method, data, option = {}) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `http://39.97.229.221:8382/friend/api/${urlparams}`,
+      method: method ? method : 'GET',
+      data,
+      // header: option.header ? option.header : 'application/json',
+      success: function(res) {
+        resolve(res.data.data);
+      },
+      fail: function(e) {
+        reject(e);
+      }
+    })
+  })
+}
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  requestApi: requestApi
 }

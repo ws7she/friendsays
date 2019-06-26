@@ -1,6 +1,16 @@
 //app.js
 App({
-  onLaunch: function () {
+  
+  onLaunch: function (option) {
+    if (option.shareTicket) {
+      wx.reLaunch({
+        url: 'pages/answer/index/index',
+      })
+    } else {
+      wx.reLaunch({
+        url: 'pages/ask/index/index',
+      })
+    }
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

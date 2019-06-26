@@ -1,55 +1,73 @@
-//index.js
-//获取应用实例
 const app = getApp()
-
+const utils = require('../../../utils/util.js');
 Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    sendTo: '好朋友',
-    question: '如果你早上起来发现自己性格发生了转换，你第一件事会是做什么？'
+    sendTo: '',
+    question: ''
   },
-  //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
+  onLoad: function() {
+    this.chechUser().then(res => {
+      this.getQuestion();
+    })
+  },
+  chechUser: function() {
+    return new Promise((resolve, reject) => {
+      if (app.globalData.userInfo) {
         this.setData({
-          userInfo: res.userInfo,
+          userInfo: app.globalData.userInfo,
           hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
+        });
+        resolve('ok');
+      } else if (this.data.canIUse) {
+        app.userInfoReadyCallback = res => {
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true
-          })
+          });
+          resolve('ok');
         }
-      })
-    }
+      } else {
+        wx.getUserInfo({
+          success: res => {
+            app.globalData.userInfo = res.userInfo
+            this.setData({
+              userInfo: res.userInfo,
+              hasUserInfo: true
+            });
+            resolve('ok');
+          }
+        })
+      };
+    })
   },
   getUserInfo: function(e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  getQuestion() {
+    return utils.requestApi('/question/next').then(res => {
+      this.setData({
+        question: res.content,
+        sendTo: res.groupName
+      })
+    });
+  },
+  onShareAppMessage(options) {
+    return {
+      title: "转发给好友",
+      imageUrl: "",
+      path: "/pages/answer/index/index"
+    }
   }
 })
