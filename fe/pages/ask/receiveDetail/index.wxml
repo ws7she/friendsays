@@ -1,7 +1,7 @@
 <!--pages/ask/recevieDetail/index.wxml-->
 <view class="public-top">
   <view class='public-top_bg'></view>
-  <view class='detail_warn'>如果你早上起床发现自己性别发生了转换，你第一件事情会是做什么？</view>
+  <view class='detail_warn'>{{question}}</view>
 </view>
 <view class='detail-title'>
   <view class='title-info'>来自朋友们的问答</view>

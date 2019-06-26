@@ -1,2 +1,20 @@
 /**index.wxss**/
 
+.warn_icon {
+  position: absolute;
+  top: 20rpx;
+  left: 75rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+.warn_icon::before{
+  content: '';
+  display: block;
+  width: 20rpx;
+  height: 20rpx;
+  background: red;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+}

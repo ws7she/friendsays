@@ -6,19 +6,20 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     sendTo: '',
-    question: ''
-  },
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+    question: '',
+    bankId: ''
   },
   onLoad: function() {
-    this.chechUser().then(res => {
+    this.checkUser().then(res => {
       this.getQuestion();
     })
   },
-  chechUser: function() {
+  checkUser: function() {
+    wx.login({
+      success(res) {
+        debugger
+      }
+    })
     return new Promise((resolve, reject) => {
       if (app.globalData.userInfo) {
         this.setData({
@@ -43,31 +44,50 @@ Page({
               hasUserInfo: true
             });
             resolve('ok');
-          }
+          },
         })
       };
     })
   },
   getUserInfo: function(e) {
-    app.globalData.userInfo = e.detail.userInfo
+    app.globalData.userInfo = e.detail.userInfo;
+    app.globalData.iv = e.detail.iv;
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
-    })
+    });
   },
   getQuestion() {
-    return utils.requestApi('/question/next').then(res => {
+    return utils.requestApi('question/next').then(res => {
       this.setData({
         question: res.content,
-        sendTo: res.groupName
+        sendTo: res.groupName,
+        bankId: res.bankId
       })
     });
   },
   onShareAppMessage(options) {
     return {
-      title: "转发给好友",
+      title: this.question,
       imageUrl: "",
       path: "/pages/answer/index/index"
     }
+  },
+  go2receive() {
+    wx.navigateTo({
+      url: `/pages/ask/receive/index?bankId=${this.data.bankId}`
+    })
+  },
+  getUserId() {
+    wx.login({
+      success(res) {
+        // if ()
+      }
+    })
+  },
+  saveUser() {
+    utils.requestApi(`member/info?openId=${app.globalData.iv}`).then(res => {
+      debugger
+    })
   }
 })

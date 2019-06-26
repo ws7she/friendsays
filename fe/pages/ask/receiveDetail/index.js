@@ -1,21 +1,21 @@
 // pages/ask/recevieDetail/index.js
-Page({
+const utils = require('../../../utils/util.js');
 
-  /**
-   * 页面的初始数据
-   */
+Page({
   data: {
-    messagesList: [{
-      msg: 'aaaaaaaaa',
-      hasRead: true
-    }]
+    bankId: '',
+    question: '',
+    messagesList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.data.bankId = options.bankId;
+    this.getQuestion().then(res => {
+      this.getAnswers();
+    })
   },
 
   /**
@@ -65,5 +65,19 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  getQuestion() {
+    return utils.requestApi(`question/next?bankId=${this.data.bankId}`).then(res => {
+      this.setData({
+        question: res.content
+      })
+    })
+  },
+  getAnswers() {
+    return utils.requestApi(`answer/list?questionId=${this.data.bankId}`).then(res => {
+      this.setData({
+        messagesList: res.content
+      })
+    })
   }
 })
