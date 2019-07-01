@@ -4,7 +4,8 @@
     "pages/ask/receiveDetail/index",
     "pages/ask/receive/index",
     "pages/ask/success/index",
-    "pages/answer/index/index"
+    "pages/answer/index/index",
+    "pages/feedback/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

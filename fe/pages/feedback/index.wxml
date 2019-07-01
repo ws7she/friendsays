@@ -1,0 +1,39 @@
+<!--pages/answer/index/index.wxml-->
+<view class="public-top feedback-pt50 {{moreRelation ? 'noOverFlow' : ''}}">
+  <view class='user-card_all'>
+    <view class='user-card_bg user-card'>
+      <view class='user-info'>
+        <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
+      </view>
+      <textarea value='{{content}}' bindblur='contentBindblur' class='feedback-textarea' placeholder='输入想说的内容，可以是遇到的问题或你有好玩的想法' maxlength='150'></textarea>
+      <text class='question_ask'></text>
+    </view>
+  </view>
+  <view class='user-card_all feedback-pt20'>
+    <view class='user-card_bg ask-card'>
+      <textarea value='{{remark}}' bindblur='remarkBindblur' class='feedback-connectionarea' placeholder='请输入手机/QQ/微信等联系方式，非必填' maxlength='150'></textarea>
+    </view>
+
+  </view>
+  <view class='send_answer feedback-pt20'>
+    <button class='public-btn bg-yellow' bindtap='getfeedback'>提交反馈</button>
+  </view>
+
+  <view class='feedback-bt20'>
+    <view>
+      <view class='feedback-text'>
+        <text class='feedback-link'>或者直接添加我的微信号：{{vx}}     </text>
+        <text class='feedback-link-copy' bindtap='copyvx'>点击复制</text>
+      </view>
+
+
+
+    </view>
+    <view class='feedback-text'>
+      <text class='feedback-link'>官方QQ粉丝群：{{qq}}     </text>
+      <text class='feedback-link-copy' bindtap='copyqq'>点击复制</text>
+    </view>
+
+
+  </view>
+</view>

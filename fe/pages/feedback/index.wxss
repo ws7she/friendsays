@@ -1,0 +1,142 @@
+/* pages/answer/index/index.wxss */
+
+.feedback-text {
+  text-align: center;
+}
+
+.feedback-link-copy {
+    color: rgb(45, 212, 45);
+  text-align: center;
+  font-size: 12px;
+
+  margin: 30rpx auto 0;
+  width: 136px;
+}
+
+.feedback-link {
+  color: grey;
+  text-align: center;
+  font-size: 12px;
+
+  margin: 30rpx auto 0;
+  width: 136px;
+}
+
+.feedback-textarea {
+  width: 100%;
+  display: block;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  height: 180rpx;
+}
+
+.feedback-connectionarea {
+  width: 100%;
+  display: block;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  height: 80rpx;
+}
+
+.feedback-pt50 {
+  padding-top: 70rpx;
+}
+
+.feedback-pt20 {
+  padding-top: 60rpx;
+}
+
+.feedback-bt20{
+  padding-top: 100rpx;
+  
+}
+
+.ask_title {
+  display: block;
+  text-align: center;
+  color: #a3a3a3;
+  font-size: 12px;
+  padding-bottom: 30rpx;
+}
+
+.ask-card {
+  padding: 60rpx 60rpx 30rpx 60rpx;
+  width: 70vw;
+}
+
+.ask-card .ask-textarea {
+  width: 100%;
+  display: block;
+  font-size: 28rpx;
+  line-height: 40rpx;
+  height: 200rpx;
+}
+
+.ask-relation {
+  width: 84vw;
+  margin: 40rpx auto 0;
+}
+
+.relation_title {
+  padding: 20rpx 0;
+  display: block;
+  font-size: 34rpx;
+}
+
+.relation-list_item {
+  border-bottom: 1px solid #f2f2f2;
+  padding: 30rpx 0;
+}
+
+.relation-list_item:last-child {
+  border: 0;
+}
+
+.relation_icon {
+  background: #f3f3f3;
+  padding: 8rpx 24rpx;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 24rpx;
+  border-radius: 26rpx;
+  margin-right: 20rpx;
+  margin-bottom: 18rpx;
+}
+
+.selected {
+  background: #fee801;
+}
+
+.relation-more {
+  z-index: 10;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  padding: 50rpx;
+  box-sizing: border-box;
+}
+
+.noOverFlow {
+  max-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.send_answer {
+  padding-bottom: 40rpx;
+  text-align: center;
+}
+
+.checkbox_label {
+  font-size: 24rpx;
+  margin-bottom: 30rpx;
+  display: block;
+}
+
+.checkbox_label span {
+  color: #a3a3a3;
+}
