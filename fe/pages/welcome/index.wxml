@@ -1,0 +1,16 @@
+<!--pages/welcome/index.wxml-->
+<swiper class='public-welcome' indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" >
+  <swiper-item class='welcome-item item-one'>
+    <image class='item-top' src='../../images/t01.png' />
+    <image class='item-middle' src='../../images/m1.png' />
+  </swiper-item>
+  <swiper-item class='welcome-item item-two'>
+    <image class='item-top' src='../../images/t02.png' />
+    <image class='item-middle' src='../../images/m2.png' />
+  </swiper-item>
+  <swiper-item class='welcome-item item-three'>
+  <image class='item-top' src='../../images/t03.png' />
+    <image class='item-middle' src='../../images/m3.png' />
+    <button class='public-btn bg-yellow welcome-btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>现在开始</button>
+  </swiper-item>
+</swiper>

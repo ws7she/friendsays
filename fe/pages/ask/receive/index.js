@@ -1,23 +1,29 @@
 // pages/ask/receive/index.js
+import { requestApi } from '../../../utils/util.js'
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    tags: [{
-      message: '如果你早上起来发现自己性格发生了转换，你第一件事会是做什么？',
-      totalAsk: 13,
-      totalNo: 5,
-      before: 1
-    }]
+    tags: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    // let memberId = wx.getStorageSync('memberId';
+    let memberId = 11111;
+    let me = this;
+    requestApi(`question/list?memberId=${memberId}`).then(res => {
+      me.setData({
+        tags: res.content
+      })
+    }).catch(e => {
+      console.log(e)
+    })
   },
 
   /**
@@ -71,7 +77,7 @@ Page({
   getQuestionList() {
 
   },
-  go2detail() {
+  go2detail(questionId) {
     
   }
 })

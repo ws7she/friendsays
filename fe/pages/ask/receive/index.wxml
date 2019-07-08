@@ -1,15 +1,15 @@
 <!--pages/ask/receive/index.wxml-->
 
-<view class='receive-card'>
-  <view class='receive-card-item' wx:for='{{tags}}' bindtap='go2detail'>
+<view class='receive-card' wx:for='{{tags}}' wx:key='{{item.questionId}}' bindtap='go2detail(item.questionId)'>
+  <view class='receive-card-item'>
     <view class='item_top'>
-      <icon></icon>
-      <text class='receive_question'>{{item.message}}</text>
+      <image src='../../../images/sign.png' class='public-sign'/>
+      <text class='receive_question'>{{item.content}}</text>
     </view>
     <view class='item_bottom'>
-      <view class='total'>共{{item.totalAsk}}条问答</view>
-      <view class='unread'>{{item.totalNo}}条未读</view>
-      <view class='time'>{{item.before}}分钟前</view>
+      <view class='total'>共{{item.replyCount}}条问答</view>
+      <view class='unread'>{{item.noRead}}条未读</view>
+      <view class='time'>{{item.latestTime}}分钟前</view>
     </view>
   </view>
 </view>

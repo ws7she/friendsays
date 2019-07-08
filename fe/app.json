@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/welcome/index",
     "pages/ask/index/index",
     "pages/ask/receiveDetail/index",
     "pages/ask/receive/index",

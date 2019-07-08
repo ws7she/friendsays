@@ -1,49 +1,67 @@
 //app.js
+import { requestApi } from './utils/util.js'
 App({
-  
+  // global: {
+  //   appId: 'wxe4048b84b2799718',
+  //   secret: 'af4ede59c2fc70836adec05145e35b10'
+  // },
+  globalData: {
+    userInfo: null,
+    showFirst: false
+  },
   onLaunch: function (option) {
-    if (option.shareTicket) {
-      wx.reLaunch({
-        url: 'pages/answer/index/index',
-      })
-    } else {
-      wx.reLaunch({
-        url: 'pages/ask/index/index',
-      })
-    }
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
+    //获取用户信息
+    this.getUserInfo(option);
+    this.Login();
+  },
+  getUserInfo: function (option) {
+      // 获取用户信息
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            this.showFirst = false;
+            wx.getUserInfo({
+              success: res => {
+                // 可以将 re s 发送给后台解码出 unionId
+                this.globalData.userInfo = res.userInfo;
+                wx.setStorageSync('userInfo', res.userInfo);
+                // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+                // 所以此处加入 callback 以防止这种情况
+                if (this.userInfoReadyCallback) {
+                  this.userInfoReadyCallback(res)
+                }
+                if (option.shareTicket) {
+                  wx.reLaunch({
+                    url: '/pages/answer/index/index',
+                  })
+                } else {
+                  wx.reLaunch({
+                    url: '/pages/ask/index/index',
+                  })
+                };
               }
-            }
+            })
+          } else {
+            wx.redirectTo({
+              url: '/pages/welcome/index',
+            })
+          }
+        }
+      })
+  },
+  Login: function () {
+    const me  = this;
+    wx.login({
+      success(res) {
+        if (res.code) {
+          //获取openid/api/member/auth
+
+          requestApi(`member/auth?authCode=${res.code}`).then(data => {
+            wx.setStorageSync('memberId', data);
           })
         }
       }
     })
-  },
-  globalData: {
-    userInfo: null
   }
 })

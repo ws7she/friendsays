@@ -1,0 +1,23 @@
+/* pages/welcome/index.wxss */
+.public-welcome {
+  width: 100%;
+  height: 100vh;
+}
+.item-top {
+  margin: 60rpx auto 0;
+  width: 640rpx;
+  display: block;
+  height: 180rpx;
+}
+.item-middle {
+  margin: 60rpx auto 0;
+  width: 640rpx;
+  display: block;
+  height: 700rpx;
+}
+.welcome-btn {
+  position: absolute;
+  bottom: 20vh;
+  left: 50%;
+  transform: translateX(-50%);
+}

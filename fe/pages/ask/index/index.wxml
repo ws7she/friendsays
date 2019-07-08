@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="public-top" wx:if='{{hasUserInfo}}'>
+<view class="public-top">
   <view class='public-top_bg'></view>
   <image class='warn_icon' src='/images/warn.png' bindtap='go2receive'></image>
   <view class='user-card_all'>
@@ -19,4 +19,3 @@
     <navigator url="/pages/feedback/index" class='public_link' >有好点子，给我们提意见</navigator>
   </view>
 </view>
-<button open-type='getUserInfo' bindgetuserinfo='getUserInfo' wx:if='{{!hasUserInfo}}'>获取授权</button>
