@@ -8,6 +8,12 @@
 </view>
 <view class='detail-list'>
   <view wx:for='{{messagesList}}' class='detail-list_item'>
-    <text>{{item.msg}}</text>
+    <view class='detail-list_item'><text>你的一个{{item.tags}}</text><text>回答：</text></view>
+    <view class='detail-list_item'>    <text>{{item.content}}</text></view>
+
   </view>
+</view>
+
+<view class='tips'>
+  <text class='tips'>微信小程序搜索“朋友说”，来这里有说有笑</text>
 </view>
