@@ -2,86 +2,71 @@
 import { requestApi } from '../../../utils/util.js'
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    tags: []
+    tags: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     // let memberId = wx.getStorageSync('memberId';
-    let memberId = 11111;
-    let me = this;
-    requestApi(`question/list?memberId=${memberId}`).then(res => {
-      me.setData({
-        tags: res.content
+    let memberId = 11111
+    let me = this
+    requestApi(`question/list?memberId=${memberId}`)
+      .then(res => {
+        me.setData({
+          tags: res.content,
+        })
       })
-    }).catch(e => {
-      console.log(e)
-    })
+      .catch(e => {
+        console.log(e)
+      })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function (option) {
-
-  },
+  onReady: function(option) {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
-  getQuestionList() {
-
-  },
+  onShareAppMessage: function() {},
+  getQuestionList() {},
   go2detail(e) {
     let questionId = e.currentTarget.dataset.questionid,
-      question = e.currentTarget.dataset.question;
+      question = e.currentTarget.dataset.question
     wx.navigateTo({
-      url: `/pages/ask/receiveDetail/index?questionId=${questionId}&content=${question}`
+      url: `/pages/ask/receiveDetail/index?questionId=${questionId}&content=${question}`,
     })
-  }
+  },
 })

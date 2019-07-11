@@ -1,4 +1,7 @@
 /* pages/ask/recevieDetail/index.wxss */
+.detail-text {
+  text-align: center;
+}
 .detail_warn {
   position: absolute;
   left: 50%;

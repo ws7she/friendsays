@@ -4,7 +4,7 @@
 data-questionid='{{item.questionId}}' data-question='{{item.content}}'>
   <view class='receive-card-item'>
     <view class='item_top'>
-      <image src='../../../images/sign.png' class='public-sign'/>
+      <image src='../../../images/sign.png' class='public-sign' />
       <text class='receive_question'>{{item.content}}</text>
     </view>
     <view class='item_bottom'>
