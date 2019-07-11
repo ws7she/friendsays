@@ -3,7 +3,7 @@ const utils = require('../../../utils/util.js');
 
 Page({
   data: {
-    bankId: '',
+    questionId: '',
     question: '',
     messagesList: []
   },
@@ -12,10 +12,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.data.bankId = options.bankId;
-    this.getQuestion().then(res => {
-      this.getAnswers();
+    // this.data.questionId = options.questionId;
+    // this.data.question = options.content;
+    this.data.questionId = '2c911b676bb30ce3016bcca459a50018';
+    this.setData({
+      question: "如何白手起家挣到一百万？"
     })
+    this.getAnswers();
   },
 
   /**
@@ -66,15 +69,8 @@ Page({
   onShareAppMessage: function () {
 
   },
-  getQuestion() {
-    return utils.requestApi(`question/next?bankId=${this.data.bankId}`).then(res => {
-      this.setData({
-        question: res.content
-      })
-    })
-  },
   getAnswers() {
-    return utils.requestApi(`answer/list?questionId=${this.data.bankId}`).then(res => {
+    return utils.requestApi(`answer/list?questionId=${this.data.questionId}`).then(res => {
       this.setData({
         messagesList: res.content
       })

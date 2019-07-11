@@ -8,6 +8,18 @@
 </view>
 <view class='detail-list'>
   <view wx:for='{{messagesList}}' class='detail-list_item'>
-    <text>{{item.msg}}</text>
+    <image src='/images/noread_icon.png' class='detail_noread_icon'/>
+    <view class='detail_item_tag'>
+      <text>你的一个不愿意透漏姓名的</text>
+      <text wx:for='{{item.tags}}'>
+        <text>“</text>
+        <text class='specical-tag'>{{item}}</text>
+        <text>“</text>
+        <text>、</text>
+      </text>
+      <text>回答：</text>
+    </view>
+    <view class='detail_item_ans'>{{item.content}}</view>
   </view>
+  <view class='detail_bottom'>微信小程序搜索“朋友说App”，来这里友说友笑</view>
 </view>

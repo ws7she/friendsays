@@ -2,12 +2,13 @@
 .detail_warn {
   position: absolute;
   left: 50%;
-  top: 30rpx;
+  top: 60rpx;
   transform: translateX(-50%);
   text-align: center;
   display: block;
   width: 75vw;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
 }
 .detail-title {
   
@@ -41,8 +42,33 @@
   box-sizing: border-box;
   box-shadow: 0 0 10rpx 10rpx #F0F0F0;
   border-radius: 20rpx;
-  padding: 10rpx 20rpx;
+  padding: 30rpx;
   font-size: 14px;
   line-height: 25px;
   position: relative;
+  margin-bottom: 60rpx;
+}
+.detail_item_tag {
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #F0F0F0;
+  color: rgb(96, 96, 96);
+}
+.specical-tag {
+  color: rgb(223, 91, 0)
+}
+.detail_item_ans {
+  padding-top: 20rpx;
+}
+.detail_noread_icon {
+  width: 60rpx;
+  height: 26rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.detail_bottom {
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 12px;
+  color: #C0C0C0;
 }

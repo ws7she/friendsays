@@ -77,7 +77,11 @@ Page({
   getQuestionList() {
 
   },
-  go2detail(questionId) {
-    
+  go2detail(e) {
+    let questionId = e.currentTarget.dataset.questionid,
+      question = e.currentTarget.dataset.question;
+    wx.navigateTo({
+      url: `/pages/ask/receiveDetail/index?questionId=${questionId}&content=${question}`
+    })
   }
 })

@@ -32,3 +32,14 @@
   flex: 1;
   text-align: right;
 }
+.receive_icon {
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+.receive_text {
+  display: inline-block;
+  vertical-align: middle;
+}
