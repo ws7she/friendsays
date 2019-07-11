@@ -36,11 +36,8 @@ App({
                     url: '/pages/answer/index/index',
                   })
                 } else {
-                  // wx.reLaunch({
-                  //   url: '/pages/ask/index/index',
-                  // })
                   wx.reLaunch({
-                    url: '/pages/ask/receiveDetail/index',
+                    url: '/pages/ask/index/index',
                   })
                 };
               }

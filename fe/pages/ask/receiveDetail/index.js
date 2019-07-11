@@ -12,11 +12,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // this.data.questionId = options.questionId;
-    // this.data.question = options.content;
-    this.data.questionId = '2c911b676bb30ce3016bcca459a50018'
+    this.data.questionId = options.questionId;
+    // this.data.questionId = '2c911b676bb30ce3016bcca459a50018'
     this.setData({
-      question: '如何白手起家挣到一百万？',
+      question: options.content,
     })
     this.getAnswers()
   },
