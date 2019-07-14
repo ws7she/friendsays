@@ -16,7 +16,7 @@ const formatNumber = n => {
 const requestApi = (urlparams, requestInfo = {}, option = {}) => {
   return new Promise((resolve, reject) => {
     wx.request({
-      url: `http://39.97.229.221:8382/friend/api/${urlparams}`,
+      url: `https://pysapp.com/friend/api/${urlparams}`,
       method: requestInfo.method ? requestInfo.method : 'GET',
       data: requestInfo.data || {},
       // header: option.header ? option.header : 'application/json',

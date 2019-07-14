@@ -1,10 +1,6 @@
 //app.js
 import { requestApi } from './utils/util.js'
 App({
-  // global: {
-  //   appId: 'wxe4048b84b2799718',
-  //   secret: 'af4ede59c2fc70836adec05145e35b10'
-  // },
   globalData: {
     userInfo: null,
     showFirst: false
