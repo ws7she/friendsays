@@ -24,6 +24,7 @@ const requestApi = (urlparams, requestInfo = {}, option = {}) => {
         resolve(res.data.data);
       },
       fail: function(e) {
+        console.log(e, 22222)
         reject(e);
       }
     })

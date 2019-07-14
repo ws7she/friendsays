@@ -1,5 +1,5 @@
 // pages/answer/index/index.js
-import { requestApi } from '../../../utils/util.js'
+const utils = require('../../../utils/util.js');
 
 const app = getApp()
 
@@ -10,8 +10,8 @@ Page({
    */
   data: {
     userInfo: {},
-    friend_name: '进击的大王',
-    question: '如果你早上起来发现自己性格发生了转换，你第一件事会是做什么？',
+    friend_name: '',
+    question: '',
     questionId: '',
     relation_list: [],
     moreRelation: false,
@@ -22,7 +22,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -36,11 +36,11 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
-  
-  onShareAppMessage: function () {
+
+  onShareAppMessage: function() {
     console.log(22222222)
   },
   chooseTag(e) {
@@ -63,9 +63,9 @@ Page({
     })
   },
   getTags() {
-    requestApi(`answer/tag?type=1`).then(res => {
+    utils.requestApi('answer/tag?type=1').then(res => {
       this.setData({
-        relation_list: res
+        relation_list: res || []
       })
     })
   },
@@ -98,7 +98,7 @@ Page({
         }
       })
     })
-    requestApi('answer/save', {
+    utils.requestApi('answer/save', {
       method: 'POST',
       data: {
         content: this.data.content,

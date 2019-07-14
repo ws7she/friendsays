@@ -19,7 +19,8 @@
 }
 .ucanask-title {
   display: block;
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: bold;
 }
 .success_question {
   margin-top: 100rpx;

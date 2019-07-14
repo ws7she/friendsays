@@ -1,7 +1,7 @@
 <view class="public-top">
   <view class='public-top_bg bg-green'></view>
   <view class='send_success_warn'>
-    <icon type='success' size='40'></icon>
+    <image src='/images/success.png' style='width: 80rpx; height: 80rpx'></image>
     <text class='success_tip'>答案成功发送给Ta啦</text>
   </view>
   <view class='success-middle'>

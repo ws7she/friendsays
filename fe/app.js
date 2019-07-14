@@ -6,9 +6,10 @@ App({
     showFirst: false
   },
   onLaunch: function (option) {
+    console.log(option)
     //获取用户信息
     this.getUserInfo(option);
-    this.Login();
+    // this.Login();
   },
   getUserInfo: function (option) {
       // 获取用户信息
@@ -27,13 +28,14 @@ App({
                 if (this.userInfoReadyCallback) {
                   this.userInfoReadyCallback(res)
                 }
-                if (!option.shareTicket) {
+                if (option.shareTicket) {
                   wx.reLaunch({
                     url: '/pages/answer/index/index',
                   })
                 } else {
                   wx.reLaunch({
                     url: '/pages/ask/index/index',
+                    // url: '/pages/ask/success/index'
                   })
                 };
               }
