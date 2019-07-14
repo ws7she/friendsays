@@ -9,7 +9,7 @@ App({
     console.log(option)
     //获取用户信息
     this.getUserInfo(option);
-    // this.Login();
+    this.Login();
   },
   getUserInfo: function (option) {
       // 获取用户信息
@@ -28,6 +28,7 @@ App({
                 if (this.userInfoReadyCallback) {
                   this.userInfoReadyCallback(res)
                 }
+                console.log(option,1111111122222333)
                 if (option.shareTicket) {
                   wx.reLaunch({
                     url: '/pages/answer/index/index',
@@ -53,8 +54,6 @@ App({
     wx.login({
       success(res) {
         if (res.code) {
-          //获取openid/api/member/auth
-
           requestApi(`member/auth?authCode=${res.code}`).then(data => {
             wx.setStorageSync('memberId', data);
           })

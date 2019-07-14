@@ -10,7 +10,7 @@
   </view>
   <view class='user-card_all ask-pt30'>
     <view class='user-card_bg ask-card'>
-      <textarea class='ask-textarea' placeholder='请输入你的答案、放心、对方并不知道你是谁，但是请务必谨言慎行，避免涉政涉黄涉恐，一经发现，将用永远封禁！最多150字。' maxlength='150' value='{{content}}' bindblur='bindTextArea'></textarea>
+      <textarea class='ask-textarea' placeholder='请输入你的答案、放心、对方并不知道你是谁，但是请务必谨言慎行，避免涉政涉黄涉恐，一经发现，将用永远封禁！最多150字。' maxlength='150' value='{{content}}' bindblur='bindTextArea' wx:if='{{!moreRelation}}'></textarea>
     </view>
     <view class='ask-relation'>
       <text class='relation_title'>您与Ta的关系线索是：</text>

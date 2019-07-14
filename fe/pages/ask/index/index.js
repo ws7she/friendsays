@@ -34,7 +34,7 @@ Page({
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",
-      path: `/pages/answer/index/index?question=${this.data.question}&questionId=${this.data.bankId}`,
+      path: `/pages/answer/index/index?question=${this.data.question}&questionId=${this.data.bankId}&user=${this.data.userInfo.nickName}`,
     }
   },
   go2receive() {

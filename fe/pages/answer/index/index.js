@@ -18,26 +18,21 @@ Page({
     content: '',
     tagStatus: false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function(options) {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         question: options.question,
-        questionId: options.questionId
+        questionId: options.questionId,
+        friend_name: options.user
       })
-      this.getTags();
     }
   },
-
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * 生命周期函数--监听页面加载
    */
-  onReady: function() {
-
+  onReady: function(options) {
+    this.getTags();
   },
 
   onShareAppMessage: function() {
@@ -63,7 +58,7 @@ Page({
     })
   },
   getTags() {
-    utils.requestApi('answer/tag?type=1').then(res => {
+    return utils.requestApi('answer/tag?type=1').then(res => {
       this.setData({
         relation_list: res || []
       })
