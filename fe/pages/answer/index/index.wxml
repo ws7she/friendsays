@@ -1,4 +1,3 @@
-<!--pages/answer/index/index.wxml-->
 <view class="public-top ask-pt80 {{moreRelation ? 'noOverFlow' : ''}}">
   <view class='user-card_all'>
     <view class='user-card_bg user-card'>
@@ -11,13 +10,13 @@
   </view>
   <view class='user-card_all ask-pt30'>
     <view class='user-card_bg ask-card'>
-      <textarea class='ask-textarea' placeholder='请输入你的答案、放心、对方并不知道你是谁，但是请务必谨言慎行，避免涉政涉黄涉恐，一经发现，将用永远封禁！最多150字。' maxlength='150'></textarea>
+      <textarea class='ask-textarea' placeholder='请输入你的答案、放心、对方并不知道你是谁，但是请务必谨言慎行，避免涉政涉黄涉恐，一经发现，将用永远封禁！最多150字。' maxlength='150' value='{{content}}' bindblur='bindTextArea'></textarea>
     </view>
     <view class='ask-relation'>
       <text class='relation_title'>您与Ta的关系线索是：</text>
       <view class='relation-list'>
         <view class='relation-list_item'>
-          <view class='relation_icon selected' wx:for='{{relation_list}}' wx:key='{{item.key}}'>{{item.value}}</view>
+         <view wx:for='{{relation_list}}' class='{{item.selected ? "relation_icon selected" : "relation_icon"}}' wx:key='{{item.tagId}}' bindtap='chooseTag' data-tag='{{item.tagId}}'>{{item.name}}</view>
           <view class='relation_icon' bindtap='showMore'> 更多标签</view>
         </view>
       </view>
@@ -25,20 +24,18 @@
   </view>
   <view class='send_answer'>
     <label class='checkbox_label'>
-      <checkbox class='checkbox'></checkbox>
+      <checkbox class='checkbox' checked='{{tagStatus}}'></checkbox>
       将此线索提供给Ta
     </label>
-    <button class='public-btn bg-yellow'>发送答案</button>
+    <button class='public-btn bg-yellow' bindtap='sendAnswer'>发送答案</button>
   </view>
 </view>
 <view class='cover' wx:if='{{moreRelation}}' bindtap='chooseRelation'></view>
 <view class='relation-more' wx:if='{{moreRelation}}'>
   <view class='relation-list'>
-    <view class='relation-list_item'>
-      <view class='relation_icon ' wx:for='{{relation_list}}' wx:key='{{item.key}}'>{{item.value}}</view>
-    </view>
-    <view class='relation-list_item'>
-      <view class='relation_icon ' wx:for='{{relation_list1}}' wx:key='{{item.key}}'>{{item.value}}</view>
+    <view class='relation-list_item' wx:for='{{relation_list}}' wx:key='{{item.tagId}}'>
+      <view class='{{item.selected ? "relation_icon selected" : "relation_icon"}}' bindtap='chooseTag' data-tag='{{item.tagId}}'>{{item.name}}</view>
+      <view class='{{item.selected ? "relation_icon selected" : "relation_icon"}}' wx:for='{{item.tags}}' wx:key='{{item.tagId}}' data-tag='{{item.tagId}}' data-type='detail' bindtap='chooseTag'>{{item.name}}</view>
     </view>
   </view>
   <button class='public-btn bg-yellow' bindtap='chooseRelation'>确认选择</button>

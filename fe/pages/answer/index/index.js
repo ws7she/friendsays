@@ -1,4 +1,6 @@
 // pages/answer/index/index.js
+import { requestApi } from '../../../utils/util.js'
+
 const app = getApp()
 
 Page({
@@ -10,39 +12,11 @@ Page({
     userInfo: {},
     friend_name: '进击的大王',
     question: '如果你早上起来发现自己性格发生了转换，你第一件事会是做什么？',
-    relation_list: [{
-      key: 'classmate',
-      value: '同学'
-    }, {
-        key: 'uclassmate',
-        value: '大学同学'
-      }, {
-        key: 'hclassmate',
-        value: '高中同学'
-      }, {
-        key: 'mclassmate',
-        value: '初中同学'
-      }, {
-        key: 'slassmate',
-        value: '小学同学'
-      }], 
-      relation_list1: [{
-        key: 'classmate',
-        value: '同学'
-      }, {
-        key: 'uclassmate',
-        value: '大学同学'
-      }, {
-        key: 'hclassmate',
-        value: '高中同学'
-      }, {
-        key: 'mclassmate',
-        value: '初中同学'
-      }, {
-        key: 'slassmate',
-        value: '小学同学'
-      }], 
-      moreRelation: false
+    questionId: '',
+    relation_list: [],
+    moreRelation: false,
+    content: '',
+    tagStatus: false
   },
 
   /**
@@ -52,8 +26,10 @@ Page({
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+        question: options.question,
+        questionId: options.questionId
       })
+      this.getTags();
     }
   },
 
@@ -63,49 +39,36 @@ Page({
   onReady: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
+  
   onShareAppMessage: function () {
     console.log(22222222)
   },
-
+  chooseTag(e) {
+    let tagId = e.currentTarget.dataset.tag;
+    let isDetail = e.currentTarget.dataset.type == 'detail';
+    this.data.relation_list.forEach(function(item) {
+      if (item.tagId == tagId) {
+        item.selected = true;
+      }
+      if (isDetail) {
+        item.tags.forEach(function(tag) {
+          if (tag.tagId == tagId) {
+            tag.selected = true;
+          }
+        })
+      }
+    })
+    this.setData({
+      relation_list: this.data.relation_list
+    })
+  },
+  getTags() {
+    requestApi(`answer/tag?type=1`).then(res => {
+      this.setData({
+        relation_list: res
+      })
+    })
+  },
   //以下是自定义事件
   showMore() {
     this.setData({
@@ -115,6 +78,40 @@ Page({
   chooseRelation() {
     this.setData({
       moreRelation: false
+    })
+  },
+  bindTextArea(e) {
+    this.setData({
+      content: e.detail.value
+    })
+  },
+  sendAnswer() {
+    let memberId = wx.getStorageSync('memberId');
+    let tagIds = [];
+    this.data.relation_list.forEach(item => {
+      if (item.selected) {
+        tagIds.push(item.tagId);
+      }
+      item.tags.forEach(tag => {
+        if (tag.selected) {
+          tagIds.push(tag.tagId);
+        }
+      })
+    })
+    requestApi('answer/save', {
+      method: 'POST',
+      data: {
+        content: this.data.content,
+        memberId: memberId,
+        questionId: this.data.questionId,
+        tagIds: tagIds,
+        tagStatus: this.data.tagStatus,
+        status: 1
+      }
+    }).then(res => {
+      wx.navigateTo({
+        url: '/pages/ask/success/index',
+      })
     })
   }
 })

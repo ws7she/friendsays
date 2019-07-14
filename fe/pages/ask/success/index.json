@@ -1,9 +1,6 @@
 {
   "usingComponents": {},
-
-  
   "navigationBarTitleText": "朋友说",
   "navigationBarBackgroundColor": "#6AC967",
   "navigationBarTextStyle": "white"
-  
 }

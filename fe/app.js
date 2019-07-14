@@ -27,7 +27,7 @@ App({
                 if (this.userInfoReadyCallback) {
                   this.userInfoReadyCallback(res)
                 }
-                if (option.shareTicket) {
+                if (!option.shareTicket) {
                   wx.reLaunch({
                     url: '/pages/answer/index/index',
                   })

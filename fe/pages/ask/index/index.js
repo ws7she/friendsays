@@ -6,9 +6,10 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     sendTo: '',
     question: '',
-    bankId: ''
+    bankId: '',
+    memberId:''
   },
-  onLoad: function() {
+  onLoad: function(option) {
     this.getQuestion();
   },
   getQuestion() {
@@ -17,23 +18,23 @@ Page({
         question: res.content,
         sendTo: res.groupName,
         bankId: res.bankId,
-        userInfo: wx.getStorageSync('userInfo')
+        userInfo: wx.getStorageSync('userInfo'),
+        memberId: wx.getStorageSync('memberId'),
       })
     });
   },
   onShareAppMessage(options) {
-    debugger
+    utils.requestApi(`question/save`, {
+      method: 'POST',
+      data: {
+        bankId: this.data.bankId,
+        memberId: this.data.memberId
+      }
+    })
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",
-      path: "/pages/answer/index/index",
-      success: function(res) {
-        debugger
-        this.sendQuestion();
-      },
-      fail: function(res) {
-        debugger
-      }
+      path: `/pages/answer/index/index?question=${this.data.question}&questionId=${this.data.bankId}`,
     }
   },
   go2receive() {
