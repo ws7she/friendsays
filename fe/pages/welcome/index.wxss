@@ -20,32 +20,28 @@
 }
 
 .welcome-btn {
+  margin: 0 auto;
+  margin-top: -96rpx;
+}
+.dots {
+  width: 200rpx;
+  height: 20rpx;
+  display: flex;
+  flex-direction: row;
   position: absolute;
-  bottom: 20vh;
   left: 50%;
   transform: translateX(-50%);
+  bottom: 80rpx;
+  text-align: center;
+  padding: 0 26rpx;
 }
-
-.wx-swiper-dots.wx-swiper-dots-horizontal {
-  margin-bottom: 50rpx;
+.dot {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 14rpx;
+  margin: 0 26rpx;
+  background-color: #686D9A;
 }
-
-.wx-swiper-dot{
-    width:10rpx;
-    display: inline-flex;
-    height: 10rpx;
-    margin-left: 20rpx;
-    justify-content:space-between;
-}
-
-.wx-swiper-dot::before {
-  content: '';
-  flex-grow: 1;
-  background: #686d9a;
-  border-radius: 8rpx;
-}
-
-.wx-swiper-dot-active::before {
-  background: #686d9a;
+.active {
   width: 27rpx;
 }

@@ -7,7 +7,8 @@ Page({
   data: {
     indicatorDots: true,
     autoplay: true,
-    options: null
+    options: null,
+    currentSwiper: 0,
   },
 
   /**
@@ -15,6 +16,11 @@ Page({
    */
   onLoad: function (options) {
     this.data.options = options;
+  },
+  swiperChange(e) {
+    this.setData({
+      currentSwiper: e.detail.current
+    })
   },
   getUserInfo() {
     wx.getUserInfo({
