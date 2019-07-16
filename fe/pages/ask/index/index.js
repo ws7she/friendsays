@@ -9,11 +9,11 @@ Page({
     bankId: '',
     memberId:''
   },
-  onLoad: function(option) {
+  onReady: function(option) {
     this.getQuestion();
   },
   getQuestion() {
-    return utils.requestApi(`question/next`).then(res => {
+    return utils.requestApi(`question/next?bankId=${this.data.bankId}`).then(res => {
       this.setData({
         question: res.content,
         sendTo: res.groupName,
