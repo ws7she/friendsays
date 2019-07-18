@@ -38,7 +38,9 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function() {
+    this.readAnswers();
+  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -61,4 +63,18 @@ Page({
       })
     })
   },
+  readAnswers() {
+    let questions = this.data.messagesList.filter(function(item) {
+      return item.readStatus === 0;
+    });
+    if (questions.length === 0) return
+    return utils.requestApi(`answer/read`, {
+      method: 'POST',
+      data: {
+        answerIds: questions
+      }
+    }).then(res => {
+      console.log(res)
+    })
+  }
 })

@@ -40,6 +40,8 @@
 .detail-list {
   margin: 0 auto;
   width: 90vw;
+  padding-top: 40px;
+  box-sizing: border-box;
 }
 .detail-list_item {
   box-sizing: border-box;
@@ -74,4 +76,18 @@
   padding: 20rpx 0;
   font-size: 12px;
   color: #C0C0C0;
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+.detail-none {
+
+}
+.detail-none-text {
+  display: block;
+  text-align: center;
+  padding-bottom: 80rpx;
+
 }

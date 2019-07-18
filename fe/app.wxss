@@ -138,7 +138,7 @@ checkbox .wx-checkbox-input {
   height: 30rpx;
 }
 checkbox .wx-checkbox-input.wx-checkbox-input-checked {
-  background: #00A6FF;
+  background: #67C864;
 }
 checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   width: 28rpx;
@@ -170,4 +170,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   display: inline-block;
   vertical-align: middle;
   color: #000;
+}
+.checkbox_label {
+  color: rgba(0,0,0,0.5)
 }

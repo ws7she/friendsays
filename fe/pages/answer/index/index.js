@@ -16,7 +16,8 @@ Page({
     relation_list: [],
     moreRelation: false,
     content: '',
-    tagStatus: false
+    tagStatus: false,
+    isDisabled: true
   },
   onLoad: function(options) {
     if (app.globalData.userInfo) {
@@ -79,6 +80,21 @@ Page({
     this.setData({
       content: e.detail.value
     })
+  },
+  checkDisabled() {
+    let tagIds = [];
+    this.data.relation_list.forEach(item => {
+      if (item.selected) {
+        tagIds.push(item.tagId);
+      }
+      item.tags.forEach(tag => {
+        if (tag.selected) {
+          tagIds.push(tag.tagId);
+        }
+      })
+    })
+    console.log(2123123)
+    return tagIds > 0 && this.data.content
   },
   sendAnswer() {
     let memberId = wx.getStorageSync('memberId');
