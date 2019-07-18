@@ -29,7 +29,7 @@
   display:block;
   text-align: center;
   font-size: 24rpx;
-  color: #C0C0C0;
+  color: rgba(51,51,51,0.3);
   padding-bottom: 50rpx;
 }
 .public-btn {
@@ -37,11 +37,11 @@
   background-color: #fff;
   font-size: 16px;
   border: 1px solid #D8D8D8;
-  width: 60vw;
+  width: 450rpx;
 }
 .bg-white {
   background-color: #fff;
-  border-color: #D8D8D8;
+  border-color: rbga(255, 255, 255, 0.2);
 }
 .bg-yellow {
   background-color: #FEE801;
@@ -55,16 +55,16 @@
   background-color: #6AC967;
 }
 .public-bottom {
-  padding-top: 100rpx;
+  padding-top: 200rpx;
   width: 60vw;
   margin: 0 auto;
 }
 .public_link {
-  color: #5DC9FF;
+  color: #67C864;
   text-align: center;
   font-size: 12px;
-  border-bottom: 1px solid #5DC9FF;
-  margin: 30rpx auto 0;
+  border-bottom: 1px solid #67C864;
+  margin: 60rpx auto 0;
   width: 136px;
 }
 .user-info {
@@ -158,4 +158,16 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   width: 60rpx;
   height: 60rpx;
   margin-right: 10rpx;
+}
+.public-icon {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 10rpx;
+  display: inline-block;
+  vertical-align: middle;
+}
+.public-icon_text {
+  display: inline-block;
+  vertical-align: middle;
+  color: #000;
 }

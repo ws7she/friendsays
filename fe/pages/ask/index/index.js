@@ -7,10 +7,12 @@ Page({
     sendTo: '',
     question: '',
     bankId: '',
-    memberId:''
+    memberId: '',
+    totalMessage: 0
   },
   onReady: function(option) {
     this.getQuestion();
+    this.getQuestionCount();
   },
   getQuestion() {
     return utils.requestApi(`question/next?bankId=${this.data.bankId}`).then(res => {
@@ -22,6 +24,13 @@ Page({
         memberId: wx.getStorageSync('memberId'),
       })
     });
+  },
+  getQuestionCount() {
+    return utils.requestApi(`answer/message?memberId=${wx.getStorageSync('memberId')}`).then(res => {
+      this.setData({
+        totalMessage: res.newCount
+      })
+    })
   },
   onShareAppMessage(options) {
     utils.requestApi(`question/save`, {

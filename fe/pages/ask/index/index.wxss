@@ -1,20 +1,23 @@
 /**index.wxss**/
-
-.warn_icon {
+.warn_info {
   position: absolute;
   top: 20rpx;
   left: 75rpx;
+}
+.warn_icon {
   width: 50rpx;
   height: 50rpx;
 }
-.warn_icon::before{
-  content: '';
-  display: block;
-  width: 20rpx;
-  height: 20rpx;
+.warn_message {
+  width: 30rpx;
+  height: 30rpx;
   background: red;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -8rpx;
+  right: -10rpx;
   border-radius: 50%;
+  font-size: 18rpx;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
 }
