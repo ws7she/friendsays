@@ -35,7 +35,7 @@ App({
                   })
                 } else {
                   wx.reLaunch({
-                    url: '/pages/ask/index/index',
+                    url: '/pages/answer/index/index',
                     // url: '/pages/ask/success/index'
                   })
                 };

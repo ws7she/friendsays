@@ -1,4 +1,5 @@
 <view class="public-top ask-pt80 {{moreRelation ? 'noOverFlow' : ''}}">
+   
   <view class='user-card_all'>
     <view class='user-card_bg user-card'>
       <view class='user-info'>

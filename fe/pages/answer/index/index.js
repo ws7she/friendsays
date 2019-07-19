@@ -16,7 +16,7 @@ Page({
     relation_list: [],
     moreRelation: false,
     content: '',
-    tagStatus: false,
+    tagStatus: true,
     isDisabled: true
   },
   onLoad: function(options) {
@@ -44,12 +44,22 @@ Page({
     let isDetail = e.currentTarget.dataset.type == 'detail';
     this.data.relation_list.forEach(function(item) {
       if (item.tagId == tagId) {
-        item.selected = true;
-      }
+        if(item.selected == true){
+          item.selected = false;
+        }else{
+          item.selected = true
+        }
+        
+      } 
       if (isDetail) {
         item.tags.forEach(function(tag) {
+          console.log(item)
           if (tag.tagId == tagId) {
-            tag.selected = true;
+            if (tag.selected == true) {
+              tag.selected = false;
+            } else {
+              tag.selected = true
+            }
           }
         })
       }
@@ -57,6 +67,7 @@ Page({
     this.setData({
       relation_list: this.data.relation_list
     })
+    console.log(this.data.relation_list)
   },
   getTags() {
     return utils.requestApi('answer/tag?type=1').then(res => {
@@ -68,7 +79,8 @@ Page({
   //以下是自定义事件
   showMore() {
     this.setData({
-      moreRelation: true
+      moreRelation: true,
+      isDisabled:false
     })
   },
   chooseRelation() {
@@ -109,6 +121,24 @@ Page({
         }
       })
     })
+    console.log(tagIds)
+    if(this.data.content.trim()===''){
+      wx.showToast({
+        title: '答案不能为空呦~',
+        icon: 'none',
+        duration: 2000
+      })
+
+    }
+    else if(tagIds.length===0){
+      wx.showToast({
+        title: '选择至少一个关系线索呦~',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    else{
+
     utils.requestApi('answer/save', {
       method: 'POST',
       data: {
@@ -124,5 +154,7 @@ Page({
         url: '/pages/ask/success/index',
       })
     })
+    }
+
   }
 })
