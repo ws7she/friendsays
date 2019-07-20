@@ -1,5 +1,4 @@
-<view class="public-top ask-pt80 {{moreRelation ? 'noOverFlow' : ''}}">
-   
+<view class="public-top ask-pt80 {{moreRelation ? 'noOverFlow' : ''}}" wx:if='{{show}}'>
   <view class='user-card_all'>
     <view class='user-card_bg user-card'>
       <view class='user-info'>
@@ -39,5 +38,5 @@
       <view class='{{item.selected ? "relation_icon selected" : "relation_icon"}}' wx:for='{{item.tags}}' wx:key='{{item.tagId}}' data-tag='{{item.tagId}}' data-type='detail' bindtap='chooseTag'>{{item.name}}</view>
     </view>
   </view>
-  <button class='public-btn bg-yellow' disabled="{{isDisabled}}" bindtap='chooseRelation'>确认选择</button>
+  <button class='public-btn bg-yellow' bindtap='chooseRelation'>确认选择</button>
 </view>

@@ -4,7 +4,10 @@
   <view class='detail_warn'>{{question}}</view>
 </view>
 <view class='detail-title'>
-  <view class='title-info'>来自朋友们的问答</view>
+  <view class='title-info'>
+    <view class='title-info_lione'></view>
+    <text>来自朋友们的问答</text>
+  </view>
 </view>
 <view class='detail-list'>
   <view wx:for='{{messagesList}}' class='detail-list_item'>

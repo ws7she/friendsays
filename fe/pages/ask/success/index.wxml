@@ -1,4 +1,4 @@
-<view class="public-top">
+<view class="public-top send_success">
   <view class='public-top_bg bg-green'></view>
   <view class='send_success_warn'>
     <image src='/images/success.png' style='width: 80rpx; height: 80rpx'></image>

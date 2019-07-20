@@ -19,10 +19,13 @@
 }
 .ucanask-title {
   display: block;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
 }
 .success_question {
   margin-top: 100rpx;
   margin-bottom: 80rpx;
+}
+.send_success .question_ask {
+  min-height: 130rpx;
 }

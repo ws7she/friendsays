@@ -16,10 +16,11 @@ Page({
     relation_list: [],
     moreRelation: false,
     content: '',
-    tagStatus: true,
-    isDisabled: true
+    tagStatus: false,
+    show: false
   },
   onLoad: function(options) {
+    this.Login();
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -38,6 +39,25 @@ Page({
 
   onShareAppMessage: function() {
     console.log(22222222)
+  },
+  Login() {
+    let me = this;
+    wx.login({
+      success(res) {
+        if (res.code) {
+          utils.requestApi(`member/auth?authCode=${res.code}`).then(data => {
+            if (data == wx.getStorageSync('memberId', data)) {
+              wx.reLaunch({
+                url: '/pages/ask/index/index',
+              })
+            }
+            me.setData({
+              show: true
+            })
+          })
+        }
+      }
+    })
   },
   chooseTag(e) {
     let tagId = e.currentTarget.dataset.tag;
@@ -121,7 +141,6 @@ Page({
         }
       })
     })
-    console.log(tagIds)
     if(this.data.content.trim()===''){
       wx.showToast({
         title: '答案不能为空呦~',

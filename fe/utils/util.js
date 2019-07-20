@@ -24,13 +24,63 @@ const requestApi = (urlparams, requestInfo = {}, option = {}) => {
         resolve(res.data.data);
       },
       fail: function(e) {
-        console.log(e, 22222)
         reject(e);
       }
     })
   })
 }
+const Login = function(option) {
+  let that = this;
+  return wx.login({
+    success(res) {
+      if (res.code) {
+        requestApi(`member/auth?authCode=${res.code}`).then(data => {
+          wx.setStorageSync('memberId', data);
+          getUserInfo(option, data, that);
+          debugger
+        })
+      }
+    }
+  })
+}
+const getUserInfo = (option, memberId, that) => {
+  // 获取用户信息
+  wx.getSetting({
+    success: res => {
+      if (res.authSetting['scope.userInfo']) {
+        // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+        wx.getUserInfo({
+          success: res => {
+            // 可以将 res 发送给后台解码出 unionId
+            that.globalData.userInfo = res.userInfo;
+            wx.setStorageSync('userInfo', res.userInfo);
+            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+            // 所以此处加入 callback 以防止这种情况
+            if (that.userInfoReadyCallback) {
+              that.userInfoReadyCallback(res)
+            }
+            if (option.shareTicket && memberId != wx.getStorageSync('memberId')) {
+              wx.reLaunch({
+                url: '/pages/answer/index/index',
+              })
+            } else {
+              wx.reLaunch({
+                url: '/pages/ask/index/index',
+              })
+            };
+          }
+        })
+      } else {
+        wx.redirectTo({
+          url: '/pages/welcome/index',
+        })
+      }
+    }
+  })
+}
 module.exports = {
   formatTime: formatTime,
-  requestApi: requestApi
+  requestApi: requestApi,
+  Login,
+  getUserInfo
 }

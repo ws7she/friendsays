@@ -6,12 +6,10 @@ App({
     showFirst: false
   },
   onLaunch: function (option) {
-    console.log(option)
     //获取用户信息
-    this.getUserInfo(option);
-    this.Login();
+    this.Login(option)
   },
-  getUserInfo: function (option) {
+  getUserInfo: function (option, memberId) {
       // 获取用户信息
       wx.getSetting({
         success: res => {
@@ -28,15 +26,15 @@ App({
                 if (this.userInfoReadyCallback) {
                   this.userInfoReadyCallback(res)
                 }
-                console.log(option,1111111122222333)
-                if (option.shareTicket) {
+                if (option.shareTicket && memberId != wx.getStorageSync('memberId')) {
                   wx.reLaunch({
                     url: '/pages/answer/index/index',
                   })
                 } else {
                   wx.reLaunch({
-                    url: '/pages/answer/index/index',
-                    // url: '/pages/ask/success/index'
+                    url: '/pages/ask/index/index',
+                    // url: '/pages/answer/index/index',
+
                   })
                 };
               }
@@ -49,13 +47,14 @@ App({
         }
       })
   },
-  Login: function () {
+  Login: function (option) {
     const me  = this;
     wx.login({
       success(res) {
         if (res.code) {
           requestApi(`member/auth?authCode=${res.code}`).then(data => {
             wx.setStorageSync('memberId', data);
+            me.getUserInfo(option, data);
           })
         }
       }
