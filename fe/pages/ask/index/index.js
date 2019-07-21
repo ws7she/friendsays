@@ -8,7 +8,8 @@ Page({
     question: '',
     bankId: '',
     memberId: '',
-    totalMessage: 0
+    totalMessage: 0,
+    askQuestionId: ''
   },
   onReady: function(option) {
     this.getQuestion();
@@ -23,7 +24,21 @@ Page({
         userInfo: wx.getStorageSync('userInfo'),
         memberId: wx.getStorageSync('memberId'),
       })
+      this.getQuestionId();
     });
+  },
+  getQuestionId() {
+    return utils.requestApi(`question/save`, {
+      method: 'POST',
+      data: {
+        bankId: this.data.bankId,
+        memberId: this.data.memberId
+      }
+    }).then(res => {
+      this.setData({
+        askQuestionId: res
+      })
+    })
   },
   getQuestionCount() {
     return utils.requestApi(`answer/message?memberId=${wx.getStorageSync('memberId')}`).then(res => {
@@ -33,17 +48,10 @@ Page({
     })
   },
   onShareAppMessage(options) {
-    utils.requestApi(`question/save`, {
-      method: 'POST',
-      data: {
-        bankId: this.data.bankId,
-        memberId: this.data.memberId
-      }
-    })
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",
-      path: `/pages/answer/index/index?question=${this.data.question}&questionId=${this.data.bankId}&user=${this.data.userInfo.nickName}`,
+      path: `/pages/answer/index/index?question=${this.data.question}&questionId=${this.data.askQuestionId}&user=${this.data.userInfo.nickName}`,
     }
   },
   go2receive() {
