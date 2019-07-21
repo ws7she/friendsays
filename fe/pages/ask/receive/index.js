@@ -13,8 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // let memberId = wx.getStorageSync('memberId';
-    let memberId = 11111
+    let memberId = wx.getStorageSync('memberId');
     let me = this
     requestApi(`question/list?memberId=${memberId}`)
       .then(res => {

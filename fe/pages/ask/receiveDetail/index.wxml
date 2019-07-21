@@ -26,10 +26,10 @@
   </view>
   <view wx:if='{{messagesList.length === 0}}' class="detail-none">
     <text class="detail-none-text">额，还没有收到回答~</text>
-    <button class='public-btn bg-yellow'>
-      <image src='/images/weixin.png' class="public-icon" />
-      <text class="public-icon_text">去问朋友</text>
-    </button>
   </view>
+  <button class='public-btn bg-yellow' open-type="share">
+    <image src='/images/weixin.png' class="public-icon" />
+    <text class="public-icon_text">去问朋友</text>
+  </button>
   <view class='detail_bottom'>微信小程序搜索“朋友说App”，来这里友说友笑</view>
 </view>

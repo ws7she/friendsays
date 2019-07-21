@@ -17,7 +17,8 @@ Page({
     moreRelation: false,
     content: '',
     tagStatus: false,
-    show: false
+    show: false,
+    askUserId: ''
   },
   onLoad: function(options) {
     this.Login();
@@ -26,7 +27,8 @@ Page({
         userInfo: app.globalData.userInfo,
         question: options.question,
         questionId: options.questionId,
-        friend_name: options.user
+        friend_name: options.user,
+        askUserId: options.askUserId
       })
     }
   },
@@ -46,14 +48,16 @@ Page({
       success(res) {
         if (res.code) {
           utils.requestApi(`member/auth?authCode=${res.code}`).then(data => {
-            if (data == wx.getStorageSync('memberId', data)) {
+            console.log(me.data.askUserId, data)
+            if (data == me.data.askUserId) {
               wx.reLaunch({
                 url: '/pages/ask/index/index',
+              }) 
+            } else {
+              me.setData({
+                show: true
               })
             }
-            me.setData({
-              show: true
-            })
           })
         }
       }
@@ -125,7 +129,6 @@ Page({
         }
       })
     })
-    console.log(2123123)
     return tagIds > 0 && this.data.content
   },
   sendAnswer() {
@@ -165,8 +168,7 @@ Page({
         memberId: memberId,
         questionId: this.data.questionId,
         tagIds: tagIds,
-        tagStatus: this.data.tagStatus,
-        status: 1
+        tagStatus: this.data.tagStatus ? 1 : 0,
       }
     }).then(res => {
       wx.navigateTo({

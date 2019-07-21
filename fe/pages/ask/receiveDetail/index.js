@@ -13,7 +13,6 @@ Page({
    */
   onLoad: function(options) {
     this.data.questionId = options.questionId;
-    // this.data.questionId = '2c911b676bb30ce3016bcca459a50018'
     this.setData({
       question: options.content,
     })
@@ -55,7 +54,15 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {},
+  onShareAppMessage(options) {
+    let memberId = wx.getStorageSync('memberId'),
+      nickName = wx.getStorageSync('userIndo').nickName
+    return {
+      title: this.data.question,
+      imageUrl: "/images/Artboard.png",
+      path: `/pages/answer/index/index?question=${this.data.question}&questionId=${this.data.questionId}&user=${nickName}&askUserId=${memberId}`,
+    }
+  },
   getAnswers() {
     return utils.requestApi(`answer/list?questionId=${this.data.questionId}`).then(res => {
       this.setData({
@@ -64,8 +71,8 @@ Page({
     })
   },
   readAnswers() {
-    let questions = this.data.messagesList.filter(function(item) {
-      return item.readStatus === 0;
+    let questions = this.data.messagesList.map(function(item) {
+      return item.answerId
     });
     if (questions.length === 0) return
     return utils.requestApi(`answer/read`, {
@@ -73,6 +80,7 @@ Page({
       data: {
         answerIds: questions
       }
+      
     }).then(res => {
       console.log(res)
     })
