@@ -48,7 +48,6 @@ Page({
     })
   },
   onShareAppMessage(options) {
-    // ${ this.data.memberId }
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",

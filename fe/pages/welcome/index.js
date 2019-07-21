@@ -1,4 +1,5 @@
 // pages/welcome/index.js
+const utils = require('../../utils/util.js');
 Page({
 
   /**
@@ -27,6 +28,12 @@ Page({
       success: res => {
         // 可以将 res 发送给后台解码出 unionId
         wx.setStorageSync('userInfo', res.userInfo);
+        utils.requestApi(`member/save`, {
+          method: 'POST',
+          data: Object.assign(res.userInfo, {
+            memberId: wx.getStorageSync('memberId')
+          })
+        })
         // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
         // 所以此处加入 callback 以防止这种情况
         try {
