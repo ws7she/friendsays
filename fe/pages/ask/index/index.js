@@ -48,6 +48,7 @@ Page({
     })
   },
   onShareAppMessage(options) {
+    debugger
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",
