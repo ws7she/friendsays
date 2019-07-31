@@ -19,29 +19,28 @@ Page({
     tagStatus: true,
     show: false,
     askUserId: '',
-    choose_list: []
+    choose_list: [],
   },
   onLoad: function(options) {
-    this.Login();
-    const me = this;
+    let me = this;
+    wx.setStorageSync('askUserId', options.askUserId);
+    wx.setStorageSync('question', options.question);
+    wx.setStorageSync('bankId', options.bankId);
+    wx.setStorageSync('nickName', options.user);
+    me.setData({
+      userInfo: wx.getStorageSync('userInfo'),
+      question: options.question,
+      friend_name: options.user,
+      askUserId: options.askUserId,
+    })
+    me.Login();
     utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
-      if (app.globalData.userInfo) {
-        me.setData({
-          userInfo: app.globalData.userInfo,
-          question: options.question,
-          questionId: res.bankId,
-          friend_name: options.user,
-          askUserId: options.askUserId
-        })
-      }
-    })
-    
-  },
-  onShow() {
-    this.setData({
-      'aa': JSON.stringify(wx.getStorageInfoSync('aa'))
+      me.setData({
+        questionId: res.questionId,
+      })
     })
   },
+  onShow() {},
   /**
    * 生命周期函数--监听页面加载
    */
@@ -58,11 +57,10 @@ Page({
       success(res) {
         if (res.code) {
           utils.requestApi(`member/auth?authCode=${res.code}`).then(data => {
-            console.log(me.data.askUserId, data)
             if (data == me.data.askUserId) {
               wx.reLaunch({
                 url: '/pages/ask/index/index',
-              }) 
+              })
             } else {
               me.setData({
                 show: true
@@ -110,7 +108,7 @@ Page({
   showMore() {
     this.setData({
       moreRelation: true,
-      isDisabled:false
+      isDisabled: false
     })
   },
   chooseRelation() {
@@ -126,37 +124,35 @@ Page({
   sendAnswer() {
     let memberId = wx.getStorageSync('memberId');
     let tagIds = this.data.choose_list;
-    if(this.data.content.trim()===''){
+    if (this.data.content.trim() === '') {
       wx.showToast({
         title: '答案不能为空呦~',
         icon: 'none',
         duration: 2000
       })
 
-    }
-    else if(tagIds.length===0){
+    } else if (tagIds.length === 0) {
       wx.showToast({
         title: '选择至少一个关系线索呦~',
         icon: 'none',
         duration: 2000
       })
-    }
-    else{
+    } else {
 
-    utils.requestApi('answer/save', {
-      method: 'POST',
-      data: {
-        content: this.data.content,
-        memberId: memberId,
-        questionId: this.data.questionId,
-        tagIds: tagIds,
-        tagStatus: this.data.tagStatus ? 1 : 0,
-      }
-    }).then(res => {
-      wx.navigateTo({
-        url: '/pages/ask/success/index',
+      utils.requestApi('answer/save', {
+        method: 'POST',
+        data: {
+          content: this.data.content,
+          memberId: memberId,
+          questionId: this.data.questionId,
+          tagIds: tagIds,
+          tagStatus: this.data.tagStatus ? 1 : 0,
+        }
+      }).then(res => {
+        wx.navigateTo({
+          url: '/pages/ask/success/index',
+        })
       })
-    })
     }
 
   }

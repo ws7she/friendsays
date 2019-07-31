@@ -8,7 +8,7 @@ App({
     showFirst: false,
     option: {}
   },
-  onLoad: function(option) {
+  onLaunch: function(option) {
     //自定义导航栏 
     wx.getSystemInfo({
       success: function(res) {
@@ -16,6 +16,7 @@ App({
       }
     })
     //获取用户信息
+    
     this.Login(option)
   },
   getUserInfo: function(option, memberId) {
@@ -42,20 +43,20 @@ App({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
-              let { path, query } = option;
-              if (path == 'pages/answer/index/index' && query.askUserId != wx.getStorageSync('memberId')) {
-                wx.reLaunch({
-                  url: `/pages/answer/index/index?question=${query.question}&questionId=${query.askQuestionId}&user=${query.userInfo.nickName}&askUserId=${query.memberId}`,
-                })
-              } else {
-                wx.reLaunch({
+              if (!(wx.getStorageSync('askUserId')) || wx.getStorageSync('memberId') == wx.getStorageSync('askUserId'))  {
+                  wx.reLaunch({
                   url: '/pages/ask/index/index',
-
                 })
-                // wx.reLaunch({
-                //   url: `/pages/answer/index/index`,
-                // })
               };
+              // if (query.memberId && query.memberId != wx.getStorageSync('memberId')) {
+              //   // wx.reLaunch({
+              //   //   url: `/pages/answer/index/index?question=${query.question}&questionId=${query.askQuestionId}&user=${query.userInfo.nickName}&askUserId=${query.memberId}`,
+              //   // })
+              // } else {
+              //   wx.reLaunch({
+              //     url: '/pages/ask/index/index',
+              //   })
+              // };
             }
           })
         } else {

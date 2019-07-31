@@ -17,7 +17,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.data.options = options;
+    this.setData({
+      options: options
+    })
   },
   swiperChange(e) {
     this.setData({
@@ -30,13 +32,13 @@ Page({
     })
   },
   getPhoneNumber(e) {
-    if (e.detail.errMsg =='getPhoneNumber:ok') {
+    if (e.detail.errMsg == 'getPhoneNumber:ok') {
       wx.setStorageSync('phone', e.detail.encryptedData)
       try {
-        if (this.data.options.shareTicket) {
-          const query = this.data.options;
+        const askUserId = wx.getStorageSync('askUserId')
+        if (askUserId && (askUserId != wx.getStorageSync('memberId'))) {
           wx.reLaunch({
-            url: `/pages/answer/index/index?question=${query.question}&questionId=${query.askQuestionId}&user=${query.userInfo.nickName}&askUserId=${query.memberId}`,
+            url: `/pages/answer/index/index?question=${wx.getStorageSync('question')}&bankId=${wx.getStorageSync('bankId')} &user=${wx.getStorageSync('nickName')} &askUserId=${wx.getStorageSync('askUserId')}`,
           })
         } else {
           wx.reLaunch({
@@ -45,7 +47,7 @@ Page({
         };
       } catch (e) {
 
-      } 
+      }
     } else {
       this.setData({
         showPhone: false
