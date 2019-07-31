@@ -32,8 +32,16 @@ Page({
     })
   },
   getPhoneNumber(e) {
+    console.log(e.detail)
+    wx.setStorageSync('phone', e.detail.encryptedData)
     if (e.detail.errMsg == 'getPhoneNumber:ok') {
-      wx.setStorageSync('phone', e.detail.encryptedData)
+      utils.requestApi(`member/save`, {
+        method: 'POST',
+        data: Object.assign(wx.getStorageSync('userInfo'), {
+          memberId: wx.getStorageSync('memberId'),
+          iv: e.detail.encryptedData
+        })
+      })
       try {
         const askUserId = wx.getStorageSync('askUserId')
         if (askUserId && (askUserId != wx.getStorageSync('memberId'))) {
@@ -59,12 +67,6 @@ Page({
       success: res => {
         // 可以将 res 发送给后台解码出 unionId
         wx.setStorageSync('userInfo', res.userInfo);
-        utils.requestApi(`member/save`, {
-          method: 'POST',
-          data: Object.assign(res.userInfo, {
-            memberId: wx.getStorageSync('memberId')
-          })
-        })
         this.setData({
           showPhone: true
         })

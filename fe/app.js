@@ -33,7 +33,8 @@ App({
               requestApi(`member/save`, {
                 method: 'POST',
                 data: Object.assign(res.userInfo, {
-                  memberId: memberId
+                  memberId: memberId,
+                  phone: phone
                 })
               })
               this.globalData.userInfo = res.userInfo;

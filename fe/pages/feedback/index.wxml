@@ -2,7 +2,7 @@
 <Nav isShow='{{true}}' isShowBack='{{true}}' title='朋友说'></Nav>
 <view class="public-top feedback-pt50 {{moreRelation ? 'noOverFlow' : ''}}">
   <view class='user-card_all'>
-    <view class='user-card_bg user-card'>
+    <view class='user-card_bg user-card ask-pt30'>
       <view class='user-info'>
         <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
       </view>
@@ -11,7 +11,7 @@
     </view>
   </view>
   <view class='user-card_all feedback-pt20'>
-    <view class='user-card_bg ask-card'>
+    <view class='user-card_bg ask-card ask-pt30'>
       <textarea value='{{remark}}' bindblur='remarkBindblur' class='feedback-connectionarea' placeholder='请输入手机/QQ/微信等联系方式，非必填' maxlength='150'></textarea>
     </view>
 
