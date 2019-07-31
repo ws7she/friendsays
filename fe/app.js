@@ -8,7 +8,7 @@ App({
     showFirst: false,
     option: {}
   },
-  onLaunch: function(option) {
+  onLoad: function(option) {
     //自定义导航栏 
     wx.getSystemInfo({
       success: function(res) {

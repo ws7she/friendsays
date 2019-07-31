@@ -23,15 +23,24 @@ Page({
   },
   onLoad: function(options) {
     this.Login();
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        question: options.question,
-        questionId: options.questionId,
-        friend_name: options.user,
-        askUserId: options.askUserId
-      })
-    }
+    const me = this;
+    utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
+      if (app.globalData.userInfo) {
+        me.setData({
+          userInfo: app.globalData.userInfo,
+          question: options.question,
+          questionId: res.bankId,
+          friend_name: options.user,
+          askUserId: options.askUserId
+        })
+      }
+    })
+    
+  },
+  onShow() {
+    this.setData({
+      'aa': JSON.stringify(wx.getStorageInfoSync('aa'))
+    })
   },
   /**
    * 生命周期函数--监听页面加载

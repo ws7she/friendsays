@@ -27,7 +27,6 @@ Page({
         userInfo: wx.getStorageSync('userInfo'),
         memberId: wx.getStorageSync('memberId'),
       })
-      this.getQuestionId();
     });
   },
   getQuestionId() {
@@ -50,12 +49,12 @@ Page({
       })
     })
   },
-  async onShareAppMessage(options) {
-    const result = await this.getQuestionId();
+  onShareAppMessage(options) {
+    this.getQuestionId();
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",
-      path: `/pages/answer/index/index?question=${this.data.question}&questionId=${this.data.askQuestionId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}`,
+      path: `/pages/answer/index/index?question=${ this.data.question }& bankId=${ this.data.bankId }& user=${ this.data.userInfo.nickName }& askUserId=${ this.data.memberId }`,
     }
   },
   go2receive() {
