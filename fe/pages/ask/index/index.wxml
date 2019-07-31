@@ -1,4 +1,5 @@
 <!--index.wxml-->
+<Nav isShow='{{false}}'></Nav>
 <view class="public-top">
   <view class='public-top_bg'></view>
   <view class='warn_info' bindtap='go2receive'> 

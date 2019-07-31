@@ -1,0 +1,11 @@
+<!--pages/components/head.wxml-->
+<view class='nav-top' style="height: {{height + 46 + 'px'}}; background: {{backGround}}" >
+  <view class='nav' style="top: {{height + 'px'}}; background: {{backGround}}" wx:if='{{isShow}}'>
+    <view class='nav-left'>
+      <image src='/images/more.png' class='nav_back' wx:if='{{isShowBack}}' bindtap=
+      'goback'></image>
+      <image src='/images/home.png' class='nav_home' wx:if='{{isShowHome}}' bindtap='gohome'></image>
+    </view>
+    <view class='nav-title'>{{title}}</view>
+  </view>
+</view>

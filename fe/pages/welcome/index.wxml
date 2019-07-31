@@ -1,4 +1,5 @@
 <!--pages/welcome/index.wxml-->
+<Nav isShow='{{true}}' title='{{""}}' backGround='#fff'></Nav>
 <view>
   <swiper class='public-welcome' autoplay="{{autoplay}}" current="{{currentSwiper}}" bindchange="swiperChange">
     <swiper-item class='welcome-item item-one'>
@@ -19,5 +20,20 @@
     <view class="dot{{0 == currentSwiper ? ' active' : ''}}"></view>
     <view class="dot{{1 == currentSwiper ? ' active' : ''}}"></view>
     <view class="dot{{2 == currentSwiper ? ' active' : ''}}"></view>
+  </view>
+</view>
+<view class='cover' wx:if='{{showPhone}}'></view>
+<view class='popup' wx:if='{{showPhone}}'>
+  <view class='popup_title'>微信授权</view>
+  <view class='popup_content'>
+    <view class='popup_info'>
+      <icon type='success' color='#FEE801' size='40'/>
+      <view class='popup_success'>微信授权成功</view>
+    </view>
+    <view class='popup_tip'>授权绑定你的手机号</view>
+  </view>
+  <view class='popup_btns'>
+    <button  class='popup_btn refuse_btn' bindtap='refusePhone'>拒绝</button>
+    <button class='popup_btn allow_btn' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">允许</button>
   </view>
 </view>

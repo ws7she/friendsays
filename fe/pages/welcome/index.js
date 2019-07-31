@@ -7,21 +7,50 @@ Page({
    */
   data: {
     indicatorDots: true,
-    autoplay: true,
+    autoplay: false,
     options: null,
     currentSwiper: 0,
+    showPhone: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.data.options = options;
   },
   swiperChange(e) {
     this.setData({
       currentSwiper: e.detail.current
     })
+  },
+  refusePhone() {
+    this.setData({
+      showPhone: false
+    })
+  },
+  getPhoneNumber(e) {
+    if (e.detail.errMsg =='getPhoneNumber:ok') {
+      wx.setStorageSync('phone', e.detail.encryptedData)
+      try {
+        if (this.data.options.shareTicket) {
+          const query = this.data.options;
+          wx.reLaunch({
+            url: `/pages/answer/index/index?question=${query.question}&questionId=${query.askQuestionId}&user=${query.userInfo.nickName}&askUserId=${query.memberId}`,
+          })
+        } else {
+          wx.reLaunch({
+            url: '/pages/ask/index/index',
+          })
+        };
+      } catch (e) {
+
+      } 
+    } else {
+      this.setData({
+        showPhone: false
+      })
+    }
   },
   getUserInfo() {
     wx.getUserInfo({
@@ -34,22 +63,9 @@ Page({
             memberId: wx.getStorageSync('memberId')
           })
         })
-        // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-        // 所以此处加入 callback 以防止这种情况
-        try {
-          if (this.data.options.shareTicket) {
-            wx.reLaunch({
-              url: '/pages/answer/index/index',
-            })
-          } else {
-            wx.reLaunch({
-              url: '/pages/ask/index/index',
-            })
-          };
-        } catch (e) {
-          
-        }
-        
+        this.setData({
+          showPhone: true
+        })
       }
     })
   }

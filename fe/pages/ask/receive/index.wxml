@@ -1,6 +1,6 @@
 <!--pages/ask/receive/index.wxml-->
-
-<view class='receive-card' wx:for='{{tags}}' wx:key='{{item.questionId}}' bindtap='go2detail'
+<Nav title='朋友说' isShow='{{true}}' isShowBack='{{true}}'></Nav>
+<view class='receive-card public-top' wx:for='{{tags}}' wx:key='{{item.questionId}}' bindtap='go2detail'
 data-questionid='{{item.questionId}}' data-question='{{item.content}}'>
   <view class='receive-card-item'>
     <view class='item_top'>

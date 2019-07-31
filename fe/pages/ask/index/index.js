@@ -11,9 +11,12 @@ Page({
     totalMessage: 0,
     askQuestionId: ''
   },
+  onShow() {
+    this.getQuestionCount();
+  },
   onReady: function(option) {
     this.getQuestion();
-    this.getQuestionCount();
+    // this.getQuestionCount();
   },
   getQuestion() {
     return utils.requestApi(`question/next?bankId=${this.data.bankId}`).then(res => {
@@ -47,8 +50,8 @@ Page({
       })
     })
   },
-  onShareAppMessage(options) {
-    debugger
+  async onShareAppMessage(options) {
+    const result = await this.getQuestionId();
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",

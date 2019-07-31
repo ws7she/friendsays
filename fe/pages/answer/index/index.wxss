@@ -7,15 +7,15 @@
   padding-bottom: 30rpx;
 }
 .ask-card {
-  padding: 60rpx 60rpx 30rpx 60rpx;
+  padding: 30rpx 60rpx 30rpx 60rpx;
   width: 70vw;
 }
 .ask-card .ask-textarea {
   width: 100%;
   display: block;
-  font-size: 32rpx;
+  font-size: 30rpx;
   line-height: 40rpx;
-  height: 276rpx;
+  height: 140rpx;
 }
 .ask-relation {
   width: 84vw;
@@ -25,6 +25,10 @@
   padding: 20rpx 0;
   display: block;
   font-size: 34rpx;
+}
+.relation-list {
+  overflow: auto;
+  /* padding-top: 20px; */
 }
 .relation-list_item {
   border-bottom: 1px solid #F2F2F2;
@@ -48,7 +52,7 @@
   background: #FEE801;
 }
 .relation-more {
-  z-index: 10;
+  z-index: 105;
   background: #fff;
   position: absolute;
   left: 0;
@@ -58,6 +62,9 @@
   border-top-right-radius: 50rpx;
   padding: 50rpx;
   box-sizing: border-box;
+}
+.relation-more .relation-list {
+  max-height: 80vh;
 }
 .noOverFlow {
   max-height: 100vh;

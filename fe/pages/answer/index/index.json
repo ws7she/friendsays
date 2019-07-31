@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "Nav": "/components/nav"
+  },
   "navigationBarTitleText": "朋友说",
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black"

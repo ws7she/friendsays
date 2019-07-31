@@ -1,4 +1,5 @@
 <!--pages/answer/index/index.wxml-->
+<Nav isShow='{{true}}' isShowBack='{{true}}' title='朋友说'></Nav>
 <view class="public-top feedback-pt50 {{moreRelation ? 'noOverFlow' : ''}}">
   <view class='user-card_all'>
     <view class='user-card_bg user-card'>

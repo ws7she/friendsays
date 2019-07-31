@@ -1,0 +1,6 @@
+var checkTag = function (item, arr){
+  return arr.indexOf(item) > -1
+}
+module.exports = {
+  checkTag: checkTag
+}

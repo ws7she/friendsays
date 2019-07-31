@@ -1,7 +1,7 @@
 /**index.wxss**/
 .warn_info {
   position: absolute;
-  top: 20rpx;
+  top: 6rpx;
   left: 75rpx;
 }
 .warn_icon {

@@ -1,4 +1,5 @@
 <!--pages/ask/recevieDetail/index.wxml-->
+<Nav title='朋友说' isShow='{{true}}' isShowBack='{{true}}'></Nav>
 <view class="public-top">
   <view class='public-top_bg'></view>
   <view class='detail_warn'>{{question}}</view>
@@ -12,24 +13,25 @@
 <view class='detail-list'>
   <view wx:for='{{messagesList}}' class='detail-list_item'>
     <image src='/images/noread_icon.png' class='detail_noread_icon' wx:if='{{item.readStatus === 0}}' />
-    <view class='detail_item_tag'>
-      <text>你的一个不愿意透漏姓名的</text>
-      <text wx:for='{{item.tags}}'>
-        <text>“</text>
-      <text class='specical-tag'>{{item}}</text>
-      <text>“</text>
-      <text>、</text>
-      </text>
-      <text>回答：</text>
-    </view>
     <view class='detail_item_ans'>{{item.content}}</view>
+
+    <view class='detail_item_tag'>
+      <text>关系线索：</text>
+      <text wx:for='{{item.tags}}' wx:if='{{item.tags.length != 0}}'>
+        <text>“</text>
+        <text class='specical-tag'>{{item}}</text>
+        <text>”</text>
+        <text>、</text>
+      </text>
+      <text wx:if='{{item.tags.length == 0}}'>无</text>
+    </view>
   </view>
   <view wx:if='{{messagesList.length === 0}}' class="detail-none">
     <text class="detail-none-text">额，还没有收到回答~</text>
   </view>
   <button class='public-btn bg-yellow' open-type="share">
     <image src='/images/weixin.png' class="public-icon" />
-    <text class="public-icon_text">去问朋友</text>
+    <text class="public-icon_text">发到微信群</text>
   </button>
-  <view class='detail_bottom'>微信小程序搜索“朋友说App”，来这里友说友笑</view>
 </view>
+<view class='detail_bottom'>微信小程序搜索“朋友说App”，来这里友说友笑</view>

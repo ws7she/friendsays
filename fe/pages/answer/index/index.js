@@ -16,9 +16,10 @@ Page({
     relation_list: [],
     moreRelation: false,
     content: '',
-    tagStatus: false,
+    tagStatus: true,
     show: false,
-    askUserId: ''
+    askUserId: '',
+    choose_list: []
   },
   onLoad: function(options) {
     this.Login();
@@ -64,34 +65,30 @@ Page({
     })
   },
   chooseTag(e) {
-    let tagId = e.currentTarget.dataset.tag;
-    let isDetail = e.currentTarget.dataset.type == 'detail';
-    this.data.relation_list.forEach(function(item) {
-      if (item.tagId == tagId) {
-        if(item.selected == true){
-          item.selected = false;
-        }else{
-          item.selected = true
-        }
-        
-      } 
-      if (isDetail) {
-        item.tags.forEach(function(tag) {
-          console.log(item)
-          if (tag.tagId == tagId) {
-            if (tag.selected == true) {
-              tag.selected = false;
-            } else {
-              tag.selected = true
-            }
-          }
+    if (this.data.choose_list.length >= 5) {
+      wx.showToast({
+        title: '最多只能选择5个标签呦~',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      let tagId = e.currentTarget.dataset.tag;
+      let isDetail = e.currentTarget.dataset.type == 'detail';
+      const me = this;
+      const index = me.data.choose_list.indexOf(tagId);
+      if (index > -1) {
+        const arr = [...me.data.choose_list]
+        arr.splice(index, 1)
+        this.setData({
+          choose_list: arr
+        })
+      } else {
+        this.setData({
+          choose_list: [...me.data.choose_list, tagId]
         })
       }
-    })
-    this.setData({
-      relation_list: this.data.relation_list
-    })
-    console.log(this.data.relation_list)
+    }
+    return false;
   },
   getTags() {
     return utils.requestApi('answer/tag?type=1').then(res => {
@@ -117,33 +114,9 @@ Page({
       content: e.detail.value
     })
   },
-  checkDisabled() {
-    let tagIds = [];
-    this.data.relation_list.forEach(item => {
-      if (item.selected) {
-        tagIds.push(item.tagId);
-      }
-      item.tags.forEach(tag => {
-        if (tag.selected) {
-          tagIds.push(tag.tagId);
-        }
-      })
-    })
-    return tagIds > 0 && this.data.content
-  },
   sendAnswer() {
     let memberId = wx.getStorageSync('memberId');
-    let tagIds = [];
-    this.data.relation_list.forEach(item => {
-      if (item.selected) {
-        tagIds.push(item.tagId);
-      }
-      item.tags.forEach(tag => {
-        if (tag.selected) {
-          tagIds.push(tag.tagId);
-        }
-      })
-    })
+    let tagIds = this.data.choose_list;
     if(this.data.content.trim()===''){
       wx.showToast({
         title: '答案不能为空呦~',

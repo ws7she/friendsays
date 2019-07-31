@@ -1,4 +1,7 @@
  /**app.wxss**/ 
+.public-top {
+  position: relative;
+}
 .public-top_bg {
   position: relative;
   width: 100vw;
@@ -16,7 +19,7 @@
   position: absolute;
   top: -50vw;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); 
 }
 .question_ask {
   display: block;
@@ -114,10 +117,10 @@
   position: relative;
 }
 .ask-pt80 {
-  padding-top: 160rpx;
+  padding-top: 80rpx;
 }
 .ask-pt30 {
-  padding-top: 60rpx;
+  padding-top: 40rpx;
 }
 .cover {
   position: fixed;
@@ -127,7 +130,7 @@
   height: 100vh;
   background: #000;
   opacity: 0.5;
-  z-index: 9;
+  z-index: 100;
 }
 checkbox {
   width: 40rpx;
@@ -173,4 +176,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 }
 .checkbox_label {
   color: rgba(0,0,0,0.5)
+}
+button::after {
+  border: none;
 }

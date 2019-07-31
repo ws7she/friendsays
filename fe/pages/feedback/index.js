@@ -1,4 +1,5 @@
 // pages/feedback/index.js
+const utils = require('../../utils/util.js');
 
 const app = getApp()
 
@@ -133,45 +134,30 @@ Page({
     console.log('in posting');
     console.log(self.data.content);
     console.log(self.data.remark);
-
-    wx.request({
-      url: "http://39.97.229.221:8382/friend/api/feedback/save",
-      method: "POST",
+    utils.requestApi(`feedback/save`, {
+      method: 'POST',
       data: {
         content: self.data.content,
-        openId: '', //TODO 获取 openID
+        memberId: wx.getStorageSync('memberId'), //TODO 获取 openID
         remark: self.data.remark
       },
-      header: {
-
-        "Content-Type": "application/json"
-      },
-      success: function(res) {
-        console.log(res.data);
-
-        wx.showToast({
-          title: '反馈成功！',
-          icon: 'success',
-          duration: 2000
+    }).then(res => {
+      wx.showToast({
+        title: '反馈成功！',
+        icon: 'success',
+        duration: 2000
+      })
+      setTimeout(function () {
+        wx.navigateBack({
+          delta: 1 //小程序关闭当前页面返回上一页面
         })
-        setTimeout(function() {
-          wx.navigateBack({
-            delta: 1 //小程序关闭当前页面返回上一页面
-          })
-        }, 2000)
-
-      },
-      fail: function (res) {
-        wx.showToast({
-          title: '好像不成功',
-          icon: 'none',
-          duration: 2000
-        })
-      }
+      }, 2000)
+    }).catch(e => {
+      wx.showToast({
+        title: '好像不成功',
+        icon: 'none',
+        duration: 2000
+      })
     })
   }
-
-
-
-
 })

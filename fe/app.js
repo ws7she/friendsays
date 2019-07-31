@@ -9,6 +9,12 @@ App({
     option: {}
   },
   onLaunch: function(option) {
+    //自定义导航栏 
+    wx.getSystemInfo({
+      success: function(res) {
+        wx.setStorageSync('navHeight', res.statusBarHeight)
+      }
+    })
     //获取用户信息
     this.Login(option)
   },
@@ -16,7 +22,8 @@ App({
     // 获取用户信息
     wx.getSetting({
       success: res => {
-        if (res.authSetting['scope.userInfo']) {
+        const phone = wx.getStorageSync('phone')
+        if (res.authSetting['scope.userInfo'] && phone) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           this.showFirst = false;
           wx.getUserInfo({
@@ -45,6 +52,9 @@ App({
                   url: '/pages/ask/index/index',
 
                 })
+                // wx.reLaunch({
+                //   url: `/pages/answer/index/index`,
+                // })
               };
             }
           })

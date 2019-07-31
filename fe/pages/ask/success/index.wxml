@@ -1,3 +1,4 @@
+<Nav title='朋友说' isShow='{{true}}' isShowHome='{{true}}' backGround='#6AC967'></Nav>
 <view class="public-top send_success">
   <view class='public-top_bg bg-green'></view>
   <view class='send_success_warn'>
