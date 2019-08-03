@@ -31,12 +31,12 @@
   left: 50%;
   transform: translateX(-50%)
 }
-.title-info_lione {
+.title-info_line {
   display: block;
   width: 260px;
   border-bottom: 1px solid #F0F0F0;
   position: absolute;
-  top: 8px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;

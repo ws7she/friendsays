@@ -16,7 +16,7 @@ App({
       }
     })
     //获取用户信息
-    
+
     this.Login(option)
   },
   getUserInfo: function(option, memberId) {
@@ -44,8 +44,8 @@ App({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
-              if (!(wx.getStorageSync('askUserId')) || wx.getStorageSync('memberId') == wx.getStorageSync('askUserId'))  {
-                  wx.reLaunch({
+              if (!(wx.getStorageSync('askUserId')) || wx.getStorageSync('memberId') == wx.getStorageSync('askUserId')) {
+                wx.reLaunch({
                   url: '/pages/ask/index/index',
                 })
               };

@@ -39,7 +39,8 @@ Page({
         method: 'POST',
         data: Object.assign(wx.getStorageSync('userInfo'), {
           memberId: wx.getStorageSync('memberId'),
-          iv: e.detail.encryptedData
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv
         })
       })
       try {

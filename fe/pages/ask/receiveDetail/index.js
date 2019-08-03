@@ -6,6 +6,7 @@ Page({
     questionId: '',
     question: '',
     messagesList: '',
+    totalLength: 0
   },
 
   /**
@@ -67,6 +68,7 @@ Page({
     return utils.requestApi(`answer/list?questionId=${this.data.questionId}`).then(res => {
       this.setData({
         messagesList: res.content,
+        totalLength: res.total
       })
     })
   },
