@@ -11,20 +11,24 @@
   </view>
 </view>
 <view class='detail-list'>
-  <view wx:for='{{messagesList}}' class='detail-list_item' wx:key='index'>
-    <image src='/images/noread_icon.png' class='detail_noread_icon' wx:if='{{item.readStatus === 0}}' />
-    <view class='detail_item_ans'>{{item.content}}</view>
+  <view wx:for='{{messagesList}}' class='list-item_over' wx:key='{{index}}'>
+    <view class='detail-list_item'  style='right: {{item.right || 0}}rpx' bindtouchstart='drawStart' bindtouchmove="drawMove" bindtouchend="drawEnd" data-index='{{index}}'>
+      <image src='/images/noread_icon.png' class='detail_noread_icon' wx:if='{{item.readStatus === 0}}' />
+      <view class='detail_item_ans'>{{item.content}}</view>
 
-    <view class='detail_item_tag'>
-      <text>关系线索：</text>
-      <text wx:for='{{item.tags}}' wx:if='{{item.tags.length != 0}}'>
+      <view class='detail_item_tag'>
+        <text>关系线索：</text>
+        <text wx:for='{{item.tags}}' wx:if='{{item.tags.length != 0}}'>
         <text>“</text>
         <text class='specical-tag'>{{item}}</text>
         <text>”</text>
         <text wx:if='{{totalLength != index - 1}}'>、</text>
-      </text>
-      <text wx:if='{{item.tags.length == 0}}'>无</text>
+        </text>
+        <text wx:if='{{item.tags.length == 0}}'>无</text>
+      </view>
     </view>
+
+    <view class='remove' data-content='{{item.content}}' data-answerid='{{item.answerId}}' bindtap='removeAnswer' style='right: {{-160 + (item.right || 0)}}rpx'>删除</view>
   </view>
   <view wx:if='{{messagesList.length === 0}}' class="detail-none">
     <text class="detail-none-text">额，还没有收到回答~</text>

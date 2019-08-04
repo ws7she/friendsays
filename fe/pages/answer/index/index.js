@@ -34,11 +34,18 @@ Page({
       askUserId: options.askUserId,
     })
     me.Login();
-    utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
+    if (options.questionId) {
+      wx.setStorageSync('questionId', options.questionId);
       me.setData({
-        questionId: res.questionId,
+        questionId: options.questionId
       })
-    })
+    } else {
+      utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
+        me.setData({
+          questionId: res.questionId,
+        })
+      })
+    }
   },
   onShow() {},
   /**

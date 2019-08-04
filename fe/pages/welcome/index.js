@@ -46,9 +46,16 @@ Page({
       try {
         const askUserId = wx.getStorageSync('askUserId')
         if (askUserId && (askUserId != wx.getStorageSync('memberId'))) {
-          wx.reLaunch({
-            url: `/pages/answer/index/index?question=${wx.getStorageSync('question')}&bankId=${wx.getStorageSync('bankId')} &user=${wx.getStorageSync('nickName')} &askUserId=${wx.getStorageSync('askUserId')}`,
-          })
+          if (wx.getStorageSync('questionId')) {
+            wx.reLaunch({
+              url: `/pages/answer/index/index?question=${wx.getStorageSync('question')}&questionId=${wx.getStorageSync('questionId')} &user=${wx.getStorageSync('nickName')} &askUserId=${wx.getStorageSync('askUserId')}`,
+            })
+          } else {
+            wx.reLaunch({
+              url: `/pages/answer/index/index?question=${wx.getStorageSync('question')}&bankId=${wx.getStorageSync('bankId')} &user=${wx.getStorageSync('nickName')} &askUserId=${wx.getStorageSync('askUserId')}`,
+            })
+          }
+          
         } else {
           wx.reLaunch({
             url: '/pages/ask/index/index',

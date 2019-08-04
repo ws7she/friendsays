@@ -6,7 +6,9 @@ Page({
     questionId: '',
     question: '',
     messagesList: '',
-    totalLength: 0
+    totalLength: 0,
+    startX: 0,
+    delBtnWidth: 160,
   },
 
   /**
@@ -57,7 +59,7 @@ Page({
    */
   onShareAppMessage(options) {
     let memberId = wx.getStorageSync('memberId'),
-      nickName = wx.getStorageSync('userIndo').nickName
+      nickName = wx.getStorageSync('userInfo').nickName
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",
@@ -85,6 +87,65 @@ Page({
       
     }).then(res => {
       console.log(res)
+    })
+  },
+  drawStart(e) {
+    const touch = e.touches[0]
+    this.data.messagesList.map(item => {
+      item.right = 0;
+    })
+    this.setData({
+      messagesList: [...this.data.messagesList],
+      startX: touch.clientX
+    })
+  },
+  drawMove(e) {
+    const touch = e.touches[0]
+    const item = this.data.messagesList[e.currentTarget.dataset.index]
+    let disX = this.data.startX - touch.clientX
+    if (disX >= 20) {
+      if (disX > this.data.delBtnWidth) {
+        disX = this.data.delBtnWidth
+      }
+      item.right = disX
+      this.setData({
+        isScroll: false,
+        messagesList: [...this.data.messagesList]
+      })
+    } else {
+      item.right = 0
+      this.setData({
+        isScroll: true,
+        messagesList: [...this.data.messagesList]
+      })
+    }
+  },
+  drawEnd(e) {
+    var item = this.data.messagesList[e.currentTarget.dataset.index]
+    if (item.right >= this.data.delBtnWidth / 2) {
+      item.right = this.data.delBtnWidth
+      this.setData({
+        messagesList: [...this.data.messagesList]
+      })
+    } else {
+      item.right = 0
+      this.setData({
+        messagesList: [...this.data.messagesList]
+      })
+    }
+  },
+  removeAnswer(e) {
+    utils.requestApi('answer/opt', {
+      method: 'POST',
+      data: {
+        "answerId": e.currentTarget.dataset.answerid,
+        "content": e.currentTarget.dataset.content,
+        "type": 0
+      }
+    }).then(res => {
+      this.getAnswers()
+    }).catch(e => {
+      this.getAnswers()
     })
   }
 })
