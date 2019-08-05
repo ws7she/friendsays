@@ -10,18 +10,31 @@
     <text>来自朋友们的问答</text>
   </view>
 </view>
+
+<modal hidden="{{hidden_reply}}" confirm-text="举报" bindconfirm="hidden_reply_confirm" no-cancel="{{nocancel}}">
+  <text decode="{{true}}" space="{{true}}">"回复功能暂未上线，望大爷您耐心等等哦~"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——瑟瑟发抖的开发团队</text>
+</modal>
+
+<modal hidden="{{hidden_report}}" confirm-text="举报" cancel-text="取消" bindcancel="cancel" bindconfirm="reportfinally" no-cancel="{{report_nocancel}}">
+  您举报的原因是：
+  <radio-group class="radio-group" bindchange="radioChange">
+  <label class="radio" wx:for="{{report_items}}">
+    <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+  </label>
+</radio-group>
+</modal>
 <view class='detail-list'>
   <view wx:for='{{messagesList}}' class='detail-list_item'>
     <image src='/images/noread_icon.png' class='detail_noread_icon' wx:if='{{item.readStatus === 0}}' />
-    <view class='detail_item_ans'>{{item.content}}</view>
+    <view class='detail_item_ans' bindtap="report" data-answerid='{{item.answerId}}'>{{item.content}}</view>
 
     <view class='detail_item_tag'>
       <text>关系线索：</text>
       <text wx:for='{{item.tags}}' wx:if='{{item.tags.length != 0}}'>
         <text>“</text>
-        <text class='specical-tag'>{{item}}</text>
-        <text>”</text>
-        <text>、</text>
+      <text class='specical-tag'>{{item}}</text>
+      <text>”</text>
+      <text>、</text>
       </text>
       <text wx:if='{{item.tags.length == 0}}'>无</text>
     </view>

@@ -6,8 +6,121 @@ Page({
     questionId: '',
     question: '',
     messagesList: '',
-  },
+    answerId: '',
 
+    hidden_reply: true,
+    nocancel: true,
+    hidden_report: true,
+    report_nocancel: false,
+    report_tag: 'yellow',
+    report_items: [{
+        name: 'yellow',
+        value: '黄色暴力',
+        checked: 'true'
+      },
+      {
+        name: '1s',
+        value: '政治敏感'
+      },
+      {
+        name: 'rude',
+        value: '不礼貌'
+      },
+      {
+        name: 'others',
+        value: '其他'
+      },
+
+    ]
+  },
+  radioChange: function(e) {
+    this.setData({
+      report_tag: e.detail.value,
+    })
+
+  },
+  cancel: function() {
+    this.setData({
+      hidden_reply: true,
+      hidden_report: true
+    });
+  },
+  hidden_reply_confirm: function(e) {
+    this.setData({
+      hidden_reply: true,
+      hidden_report: false,
+      // answerId: e.currentTarget.dataset.answerid
+    });
+  },
+  report: function(e) {
+    console.log(this.data.answerId)
+    console.log(this.data.report_tag)
+    this.setData({
+      hidden_reply: false,
+      hidden_report: true,
+      answerId: e.currentTarget.dataset.answerid
+    });
+  },
+  reportfinally: function() {
+    var that = this
+    let answer_id = this.data.answerId
+    let report_tag_content = this.data.report_tag
+    console.log(answer_id + report_tag_content)
+    wx.request({
+      url: 'https://pysapp.com/friend/api/answer/opt',
+      method: 'POST',
+      data: {
+        answerId: answer_id,
+        content: report_tag_content,
+        type: '1'
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res.data)
+        if ('ok' === res.data.message) {
+          wx.showToast({
+            title: '举报成功',
+            icon: 'succes',
+            duration: 1000,
+            mask: true
+          })
+        }
+        that.setData({
+          hidden_reply: true,
+          hidden_report: true,
+        })
+      },
+      fail(res){
+        wx.showToast({
+          title: '未成功!请检查网络连接',
+          icon: 'none',
+          duration: 1000,
+          mask: true
+        })
+        that.setData({
+          hidden_reply: true,
+          hidden_report: true,
+        })
+      }
+
+    })
+    // return utils.requestApi('answer/opt',{
+    //   method: 'POST',
+    //   data: {
+    //     answerId: answer_id,
+    //     content: report_tag_content,
+    //     type: '1',
+    //   }
+    // }).then(res => {
+    //     console.log(res.data.data)
+    //   })
+    //   .catch(e => {
+    //     console.log(e)
+    //   })
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -65,6 +178,7 @@ Page({
   },
   getAnswers() {
     return utils.requestApi(`answer/list?questionId=${this.data.questionId}`).then(res => {
+      console.log('-----------' + res.data)
       this.setData({
         messagesList: res.content,
       })
@@ -80,9 +194,9 @@ Page({
       data: {
         answerIds: questions
       }
-      
+
     }).then(res => {
-      console.log(res)
+      console.log('-----------' + res)
     })
   }
 })

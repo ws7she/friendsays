@@ -64,6 +64,7 @@ Page({
   go2detail(e) {
     let questionId = e.currentTarget.dataset.questionid,
       question = e.currentTarget.dataset.question
+    console.log(questionId)
     wx.navigateTo({
       url: `/pages/ask/receiveDetail/index?questionId=${questionId}&content=${question}`,
     })
