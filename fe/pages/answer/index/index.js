@@ -19,7 +19,7 @@ Page({
     tagStatus: true,
     show: false,
     askUserId: '',
-    choose_list: [],
+    choose_list: []
   },
   onLoad: function(options) {
     let me = this;
@@ -34,11 +34,18 @@ Page({
       askUserId: options.askUserId,
     })
     me.Login();
-    utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
+    if (options.questionId) {
+      wx.setStorageSync('questionId', options.questionId);
       me.setData({
-        questionId: res.questionId,
+        questionId: options.questionId
       })
-    })
+    } else {
+      utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
+        me.setData({
+          questionId: res.questionId,
+        })
+      })
+    }
   },
   onShow() {},
   /**
@@ -121,7 +128,8 @@ Page({
       content: e.detail.value
     })
   },
-  sendAnswer() {
+  //模板消息
+  sendAnswer(event) {
     let memberId = wx.getStorageSync('memberId');
     let tagIds = this.data.choose_list;
     if (this.data.content.trim() === '') {
@@ -138,7 +146,8 @@ Page({
         duration: 2000
       })
     } else {
-
+      // 模版消息
+      const formId = event.detail.formId;
       utils.requestApi('answer/save', {
         method: 'POST',
         data: {
@@ -147,6 +156,7 @@ Page({
           questionId: this.data.questionId,
           tagIds: tagIds,
           tagStatus: this.data.tagStatus ? 1 : 0,
+          formId
         }
       }).then(res => {
         wx.navigateTo({
@@ -155,5 +165,6 @@ Page({
       })
     }
 
-  }
+  },
+  
 })

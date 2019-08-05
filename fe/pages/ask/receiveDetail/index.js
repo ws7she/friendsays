@@ -6,6 +6,9 @@ Page({
     questionId: '',
     question: '',
     messagesList: '',
+    totalLength: 0,
+    startX: 0,
+    delBtnWidth: 160,
     answerId: '',
 
     hidden_reply: true,
@@ -92,7 +95,7 @@ Page({
           hidden_report: true,
         })
       },
-      fail(res){
+      fail(res) {
         wx.showToast({
           title: '未成功!请检查网络连接',
           icon: 'none',
@@ -104,22 +107,7 @@ Page({
           hidden_report: true,
         })
       }
-
     })
-    // return utils.requestApi('answer/opt',{
-    //   method: 'POST',
-    //   data: {
-    //     answerId: answer_id,
-    //     content: report_tag_content,
-    //     type: '1',
-    //   }
-    // }).then(res => {
-    //     console.log(res.data.data)
-    //   })
-    //   .catch(e => {
-    //     console.log(e)
-    //   })
-
   },
   /**
    * 生命周期函数--监听页面加载
@@ -169,7 +157,7 @@ Page({
    */
   onShareAppMessage(options) {
     let memberId = wx.getStorageSync('memberId'),
-      nickName = wx.getStorageSync('userIndo').nickName
+      nickName = wx.getStorageSync('userInfo').nickName
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",
@@ -181,6 +169,7 @@ Page({
       console.log('-----------' + res.data)
       this.setData({
         messagesList: res.content,
+        totalLength: res.total
       })
     })
   },
@@ -197,6 +186,65 @@ Page({
 
     }).then(res => {
       console.log('-----------' + res)
+    })
+  },
+  drawStart(e) {
+    const touch = e.touches[0]
+    this.data.messagesList.map(item => {
+      item.right = 0;
+    })
+    this.setData({
+      messagesList: [...this.data.messagesList],
+      startX: touch.clientX
+    })
+  },
+  drawMove(e) {
+    const touch = e.touches[0]
+    const item = this.data.messagesList[e.currentTarget.dataset.index]
+    let disX = this.data.startX - touch.clientX
+    if (disX >= 20) {
+      if (disX > this.data.delBtnWidth) {
+        disX = this.data.delBtnWidth
+      }
+      item.right = disX
+      this.setData({
+        isScroll: false,
+        messagesList: [...this.data.messagesList]
+      })
+    } else {
+      item.right = 0
+      this.setData({
+        isScroll: true,
+        messagesList: [...this.data.messagesList]
+      })
+    }
+  },
+  drawEnd(e) {
+    var item = this.data.messagesList[e.currentTarget.dataset.index]
+    if (item.right >= this.data.delBtnWidth / 2) {
+      item.right = this.data.delBtnWidth
+      this.setData({
+        messagesList: [...this.data.messagesList]
+      })
+    } else {
+      item.right = 0
+      this.setData({
+        messagesList: [...this.data.messagesList]
+      })
+    }
+  },
+  removeAnswer(e) {
+    utils.requestApi('answer/opt', {
+      method: 'POST',
+      data: {
+        "answerId": e.currentTarget.dataset.answerid,
+        "content": e.currentTarget.dataset.content,
+        "type": 0
+      }
+    }).then(res => {
+      this.getAnswers()
+    }).catch(e => {
+      this.getAnswers()
     })
   }
 })

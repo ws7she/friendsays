@@ -1,3 +1,4 @@
+<form bindsubmit="sendAnswer" report-submit='true'>
 <Nav title='朋友说' isShow='{{true}}' isShowHome='{{true}}' backGround='#fff'></Nav>
 <wxs src="./tools.wxs" module="tools" />
 <view class="public-top ask-pt80 {{moreRelation ? 'noOverFlow' : ''}}" wx:if='{{show}}'>
@@ -30,7 +31,7 @@
       <checkbox class='checkbox' checked='{{tagStatus}}'></checkbox>
       将此线索提供给Ta
     </label>
-    <button class='public-btn bg-yellow' bindtap='sendAnswer'>发送答案</button>
+    <button class='public-btn bg-yellow' bindtap='sendAnswer' formType="submit">发送答案</button>
   </view>
 </view>
 <view class='cover' wx:if='{{moreRelation}}' bindtap='chooseRelation'></view>
@@ -43,3 +44,4 @@
   </view>
   <button class='public-btn bg-yellow' bindtap='chooseRelation'>确认选择</button>
 </view>
+</form>

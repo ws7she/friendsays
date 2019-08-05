@@ -7,6 +7,7 @@ Page({
    */
   data: {
     tags: [],
+    formId: ''
   },
 
   /**
@@ -68,5 +69,5 @@ Page({
     wx.navigateTo({
       url: `/pages/ask/receiveDetail/index?questionId=${questionId}&content=${question}`,
     })
-  },
+  }
 })
