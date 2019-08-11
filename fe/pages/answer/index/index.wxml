@@ -31,7 +31,7 @@
       <checkbox class='checkbox' checked='{{tagStatus}}'></checkbox>
       将此线索提供给Ta
     </label>
-    <button class='public-btn bg-yellow' bindtap='sendAnswer' formType="submit">发送答案</button>
+    <button class='public-btn bg-yellow' formType="submit">发送答案</button>
   </view>
 </view>
 <view class='cover' wx:if='{{moreRelation}}' bindtap='chooseRelation'></view>

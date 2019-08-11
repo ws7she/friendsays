@@ -147,7 +147,7 @@ Page({
       })
     } else {
       // 模版消息
-      const formId = event.detail.formId;
+      const formId = `wx2019${event.detail.formId}`;
       utils.requestApi('answer/save', {
         method: 'POST',
         data: {
