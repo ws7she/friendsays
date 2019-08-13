@@ -1,22 +1,24 @@
 <!--pages/ask/receive/index.wxml-->
 
 <Nav title='朋友说' isShow='{{true}}' isShowBack='{{true}}'></Nav>
-<view class='receive-card public-top' wx:for='{{tags}}' wx:key='{{item.questionId}}' bindtap='go2detail' data-questionid='{{item.questionId}}' data-question='{{item.content}}'>
-  <view class='receive-card-item'>
-    <view class='item_top'>
-      <image src='../../../images/sign.png' class='public-sign' />
-      <text class='receive_question'>{{item.content}}</text>
-    </view>
-    <view class='item_bottom'>
-      <view class='total'>
-        <image src='../../../images/noread.png' class='receive_icon' />
-        <text class='receive_text'>共{{item.replyCount}}条问答</text>
+<form wx:for='{{tags}}' wx:key='{{item.questionId}}' data-questionid='{{item.questionId}}' data-question='{{item.content}}' bindsubmit="go2detail" report-submit='true'>
+  <button class='receive-card public-top reset-button'formType="submit">
+    <view class='receive-card-item'>
+      <view class='item_top'>
+        <image src='../../../images/sign.png' class='public-sign' />
+        <text class='receive_question'>{{item.content}}</text>
       </view>
-      <view class='unread'>
-        <image src='../../../images/answer.png' class='receive_icon' />
-        <text class='receive_text'>{{item.noRead}}条未读</text>
+      <view class='item_bottom'>
+        <view class='total'>
+          <image src='../../../images/noread.png' class='receive_icon' />
+          <text class='receive_text'>共{{item.replyCount}}条问答</text>
+        </view>
+        <view class='unread'>
+          <image src='../../../images/answer.png' class='receive_icon' />
+          <text class='receive_text'>{{item.noRead}}条未读</text>
+        </view>
+        <view class='time'>{{item.latestTime}}</view>
       </view>
-      <view class='time'>{{item.latestTime}}</view>
     </view>
-  </view>
-</view>
+  </button>
+</form>

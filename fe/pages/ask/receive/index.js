@@ -62,12 +62,28 @@ Page({
    */
   onShareAppMessage: function() {},
   getQuestionList() {},
+  
   go2detail(e) {
     let questionId = e.currentTarget.dataset.questionid,
-      question = e.currentTarget.dataset.question
-    console.log(questionId)
-    wx.navigateTo({
-      url: `/pages/ask/receiveDetail/index?questionId=${questionId}&content=${question}`,
+      question = e.currentTarget.dataset.question,
+      formId = e.detail.formId
+    requestApi(`question/save`, {
+      method: 'POST',
+      data: {
+        questionId: questionId,
+        formId
+      }
+    }).then(res => {
+      wx.navigateTo({
+        url: `/pages/ask/receiveDetail/index?questionId=${questionId}&content=${question}`,
+      })
+    }).catch(e => {
+      wx.showToast({
+        title: e,
+        icon: 'none',
+        duration: 2000
+      })
     })
+    
   }
 })

@@ -180,3 +180,21 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 button::after {
   border: none;
 }
+.reset-button {
+  position:relative;
+  display:block;
+  margin-left:inherit;
+  margin-right:inherit;
+  padding-left:inherit;
+  padding-right:inherit;
+  box-sizing:border-box;
+  font-size: inherit;
+  text-align:inherit;
+  text-decoration:none;
+  line-height:inherit;
+  border-radius:5px;
+  -webkit-tap-highlight-color:transparent;
+  overflow:hidden;
+  color:#000000;
+  background-color:#fff;
+}

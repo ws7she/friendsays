@@ -147,7 +147,7 @@ Page({
       })
     } else {
       // 模版消息
-      const formId = `wx2019${event.detail.formId}`;
+      const formId = `${event.detail.formId}`;
       utils.requestApi('answer/save', {
         method: 'POST',
         data: {
@@ -156,7 +156,6 @@ Page({
           questionId: this.data.questionId,
           tagIds: tagIds,
           tagStatus: this.data.tagStatus ? 1 : 0,
-          formId
         }
       }).then(res => {
         wx.navigateTo({

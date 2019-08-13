@@ -29,12 +29,13 @@ Page({
       })
     });
   },
-  getQuestionId() {
+  getQuestionId(formId) {
     return utils.requestApi(`question/save`, {
       method: 'POST',
       data: {
         bankId: this.data.bankId,
-        memberId: this.data.memberId
+        memberId: this.data.memberId,
+        formId
       }
     }).then(res => {
       this.setData({
@@ -49,8 +50,10 @@ Page({
       })
     })
   },
-  onShareAppMessage(options) {
-    this.getQuestionId();
+  onShareAppMessage(e) {
+    if (e.type == 'submit') {
+      this.getQuestionId(e.detail.formId);
+    }
     return {
       title: this.data.question,
       imageUrl: "/images/Artboard.png",

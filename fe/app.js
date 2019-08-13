@@ -29,14 +29,6 @@ App({
           this.showFirst = false;
           wx.getUserInfo({
             success: res => {
-              // 可以将 re s 发送给后台解码出 unionId
-              requestApi(`member/save`, {
-                method: 'POST',
-                data: Object.assign(res.userInfo, {
-                  memberId: memberId,
-                  phone: phone
-                })
-              })
               this.globalData.userInfo = res.userInfo;
               wx.setStorageSync('userInfo', res.userInfo);
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -49,15 +41,6 @@ App({
                   url: '/pages/ask/index/index',
                 })
               };
-              // if (query.memberId && query.memberId != wx.getStorageSync('memberId')) {
-              //   // wx.reLaunch({
-              //   //   url: `/pages/answer/index/index?question=${query.question}&questionId=${query.askQuestionId}&user=${query.userInfo.nickName}&askUserId=${query.memberId}`,
-              //   // })
-              // } else {
-              //   wx.reLaunch({
-              //     url: '/pages/ask/index/index',
-              //   })
-              // };
             }
           })
         } else {

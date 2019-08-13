@@ -1,32 +1,34 @@
 <!--index.wxml-->
-<Nav isShow='{{false}}'></Nav>
-<view class="public-top">
-  <view class='public-top_bg'></view>
-  <view class='warn_info' bindtap='go2receive'> 
-    <image class='warn_icon' src='/images/warn.png' ></image>
-    <view class='warn_message'>{{totalMessage > 99 ? '99+' : totalMessage}}</view>
-  </view>
-  
-  <view class='user-card_all'>
-    <view class='user-card_bg user-card_bg1'></view>
-    <view class='user-card_bg user-card_bg2'></view>
-    <view class='user-card_bg user-card'>
-      <view class='user-info'>
-        <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
+<form bindsubmit="onShareAppMessage" report-submit='true'>
+  <Nav isShow='{{false}}'></Nav>
+  <view class="public-top">
+    <view class='public-top_bg'></view>
+    <view class='warn_info' bindtap='go2receive'> 
+      <image class='warn_icon' src='/images/warn.png' ></image>
+      <view class='warn_message'>{{totalMessage > 99 ? '99+' : totalMessage}}</view>
+    </view>
+    
+    <view class='user-card_all'>
+      <view class='user-card_bg user-card_bg1'></view>
+      <view class='user-card_bg user-card_bg2'></view>
+      <view class='user-card_bg user-card'>
+        <view class='user-info'>
+          <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
+        </view>
+        <text class='question_ask'>{{question}}</text>
+        <text class='tips'>此问题更合适发送给{{sendTo}}</text>
+        <button class='public-btn bg-white' bindtap='getQuestion'>
+          <image src='/images/change.png' class='public-icon'/>
+          <text class='public-icon_text'>更换问题</text>
+        </button>
       </view>
-      <text class='question_ask'>{{question}}</text>
-      <text class='tips'>此问题更合适发送给{{sendTo}}</text>
-      <button class='public-btn bg-white' bindtap='getQuestion'>
-        <image src='/images/change.png' class='public-icon'/>
-        <text class='public-icon_text'>更换问题</text>
+    </view>
+    <view class='public-bottom'>
+      <button class='public-btn bg-yellow' open-type="share" formType="submit">
+        <image src='/images/weixin.png' class='public-icon'/>
+        <text class='public-icon_text'>发到微信群</text>
       </button>
+      <navigator url="/pages/feedback/index" class='public_link' >有好点子，给我们提意见</navigator>
     </view>
   </view>
-  <view class='public-bottom'>
-    <button class='public-btn bg-yellow' open-type="share">
-      <image src='/images/weixin.png' class='public-icon'/>
-      <text class='public-icon_text'>发到微信群</text>
-    </button>
-    <navigator url="/pages/feedback/index" class='public_link' >有好点子，给我们提意见</navigator>
-  </view>
-</view>
+</form>
