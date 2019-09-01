@@ -22,7 +22,14 @@
           <text class='public-icon_text'>更换问题</text>
         </button>
       </view>
+      <painter style="position:fixed;top:-9999rpx" palette="{{sharePng}}" bind:imgOK="onImgOK" />
+      <view class="tips" style="margin-top:60rpx" bindtap='ModifiyQuestion'>
+
+      轻触可手动编辑问题</view>
     </view>
+    <modal hidden="{{ModifiyQuestion}}" confirm-text="编辑完成" bindconfirm="ConfirmModifiy" no-cancel="" cancel-text="取消" bindcancel = "CancelModifiy">
+ <textarea  placeholder="这里是要编辑的问题" value="{{question}}" focus="{{focus}}" show-confirm-bar='true'  bindconfirm='ModifiyContent'></textarea>
+    </modal>
     <view class='public-bottom'>
       <button class='public-btn bg-yellow' open-type="share" formType="submit">
         <image src='/images/weixin.png' class='public-icon'/>

@@ -10,7 +10,7 @@
     <text>来自朋友们的问答</text>
   </view>
 </view>
-<modal hidden="{{hidden_reply}}" confirm-text="举报" bindconfirm="hidden_reply_confirm" no-cancel="{{nocancel}}">
+<modal hidden="{{hidden_reply}}" confirm-text="举报" bindconfirm="hidden_reply_confirm" no-cancel="{{nocancel}}" cancel-text="取消" bindcancel = "hidden_reply">
   <text decode="{{true}}" space="{{true}}">
     "回复功能暂未上线，望大爷您耐心等等哦~"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——瑟瑟发抖的开发团队
   </text>

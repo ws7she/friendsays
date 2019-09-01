@@ -12,7 +12,7 @@ Page({
     answerId: '',
 
     hidden_reply: true,
-    nocancel: true,
+    nocancel: false,
     hidden_report: true,
     report_nocancel: false,
     report_tag: 'yellow',
@@ -55,6 +55,14 @@ Page({
       // answerId: e.currentTarget.dataset.answerid
     });
   },
+  hidden_reply: function (e) {
+    this.setData({
+      hidden_reply: true,
+      hidden_report: true,
+      // answerId: e.currentTarget.dataset.answerid
+    });
+  },
+
   report: function(e) {
     console.log(this.data.answerId)
     console.log(this.data.report_tag)
