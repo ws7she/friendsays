@@ -28,7 +28,7 @@
       轻触可手动编辑问题</view>
     </view>
     <modal hidden="{{ModifiyQuestion}}" confirm-text="编辑完成" bindconfirm="ConfirmModifiy" no-cancel="" cancel-text="取消" bindcancel = "CancelModifiy">
- <textarea  placeholder="这里是要编辑的问题" value="{{question}}" focus="{{focus}}" show-confirm-bar='true'  bindconfirm='ModifiyContent'></textarea>
+ <textarea  placeholder="这里是要编辑的问题" value="{{question}}" focus="{{focus}}" show-confirm-bar='false'  bindconfirm='ModifiyContent'></textarea>
     </modal>
     <view class='public-bottom'>
       <button class='public-btn bg-yellow' open-type="share" formType="submit">
