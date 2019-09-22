@@ -58,7 +58,7 @@
   background-color: #6AC967;
 }
 .public-bottom {
-  padding-top: 200rpx;
+  padding-top: 100rpx;
   width: 60vw;
   margin: 0 auto;
 }

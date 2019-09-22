@@ -82,7 +82,6 @@ Page({
           encryptedData: res.encryptedData,
           iv: res.iv
         });
-        debugger
         this.setData({
           showPhone: true
         })

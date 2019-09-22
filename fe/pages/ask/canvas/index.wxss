@@ -1,0 +1,15 @@
+/* pages/ask/canvas/index.wxss */
+.canvas-wrapper {
+  position: relative;
+}
+.canvas-btn {
+  position: absolute;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9
+}
+.canvas-pic  {
+  width: 100%;
+  height: calc(100vh - 85px)
+}

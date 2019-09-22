@@ -3,11 +3,11 @@
   <Nav isShow='{{false}}'></Nav>
   <view class="public-top">
     <view class='public-top_bg'></view>
-    <view class='warn_info' bindtap='go2receive'> 
-      <image class='warn_icon' src='/images/warn.png' ></image>
+    <view class='warn_info' bindtap='go2receive'>
+      <image class='warn_icon' src='/images/warn.png'></image>
       <view class='warn_message'>{{totalMessage > 99 ? '99+' : totalMessage}}</view>
     </view>
-    
+
     <view class='user-card_all'>
       <view class='user-card_bg user-card_bg1'></view>
       <view class='user-card_bg user-card_bg2'></view>
@@ -18,24 +18,29 @@
         <text class='question_ask'>{{question}}</text>
         <text class='tips'>此问题更合适发送给{{sendTo}}</text>
         <button class='public-btn bg-white' bindtap='getQuestion'>
-          <image src='/images/change.png' class='public-icon'/>
+          <image src='/images/change.png' class='public-icon' />
           <text class='public-icon_text'>更换问题</text>
         </button>
       </view>
       <painter style="position:fixed;top:-9999rpx" palette="{{sharePng}}" bind:imgOK="onImgOK" />
       <view class="tips" style="margin-top:60rpx" bindtap='ModifiyQuestion'>
-
-      轻触可手动编辑问题</view>
+        轻触可手动编辑问题</view>
     </view>
-    <modal hidden="{{ModifiyQuestion}}" confirm-text="编辑完成" bindconfirm="ConfirmModifiy" no-cancel="" cancel-text="取消" bindcancel = "CancelModifiy">
- <textarea  placeholder="这里是要编辑的问题" value="{{question}}" focus="{{focus}}" show-confirm-bar='true'  bindconfirm='ModifiyContent'></textarea>
+    <modal hidden="{{ModifiyQuestion}}" confirm-text="编辑完成" bindconfirm="ConfirmModifiy" no-cancel="" cancel-text="取消" bindcancel="CancelModifiy">
+      <textarea placeholder="这里是要编辑的问题" value="{{question}}" focus="{{focus}}" show-confirm-bar='true' bindconfirm='ModifiyContent'></textarea>
     </modal>
-    <view class='public-bottom'>
-      <button class='public-btn bg-yellow' open-type="share" formType="submit">
-        <image src='/images/weixin.png' class='public-icon'/>
-        <text class='public-icon_text'>发到微信群</text>
+    <view class='public-bottom send_buttons'>
+      <button class='public-btn bg-gray' open-type="share" formType="submit">
+        <image src='/images/weixin.png' class='public-icon' />
+        <text class='public-icon_text'>发微信群</text>
       </button>
-      <navigator url="/pages/feedback/index" class='public_link' >有好点子，给我们提意见</navigator>
+      <picker style='display: inline-block' range='{{chooseList}}' value='{{chooseType}}' bindchange='bindPickerChange'>
+        <button class='public-btn bg-yellow' >
+          <image src='/images/pengyouquan.png' class='public-icon'/>
+          <text class='public-icon_text'>发朋友圈</text>
+        </button>
+      </picker>
+      <navigator url="/pages/feedback/index" class='public_link'>有好点子，给我们提意见</navigator>
     </view>
   </view>
 </form>

@@ -1,0 +1,10 @@
+<!--pages/ask/canvas/index.wxml-->
+<view class='canvas-wrapper'>
+  <Nav isShow='{{true}}' isShowBack='{{true}}'></Nav>
+  <canvas class='canvas-pic' canvas-id='canvas'></canvas>
+  <cover-view class='canvas-btn'>
+    <button class='public-btn bg-yellow' bindtap='saveCanvas'>
+      <cover-view style='height: 44px'>保存图片</cover-view>
+    </button>
+  </cover-view>
+</view>

@@ -1,5 +1,5 @@
 const app = getApp()
-const utils = require('../../../utils/util.js'); 
+const utils = require('../../../utils/util.js');
 const common = {
   left: '-20rpx',
   right: '50rpx',
@@ -7,7 +7,8 @@ const common = {
   top: '30rpx',
   fontSize: '18rpx',
   lineHeight: '25rpx',
-  color: 'yellow'};
+  color: 'yellow'
+};
 Page({
   data: {
     userInfo: {},
@@ -18,12 +19,13 @@ Page({
     memberId: '',
     totalMessage: 0,
     askQuestionId: '',
-    ModifiyQuestion:true,
-    focus:false,
+    ModifiyQuestion: true,
+    focus: false,
     shareimagePath: '',
 
-    sharePng: {
-    },
+    sharePng: {},
+    chooseList: ['使用照片做背景', '无背景'],
+    chooseType: null
   },
   onShow() {
     this.getQuestionCount();
@@ -44,14 +46,11 @@ Page({
           background: '/images/Artboard_M.png',
           width: '254rpx',
           height: '200rpx',
-          views: [
-            {
-              type: 'text',
-              text: res.content,
-              css: [{
-              },common],
-            },
-          ],
+          views: [{
+            type: 'text',
+            text: res.content,
+            css: [{}, common],
+          }, ],
         },
       })
     });
@@ -84,13 +83,13 @@ Page({
     })
     console.log(e);
   },
-  ModifiyQuestion(){
+  ModifiyQuestion() {
     this.setData({
       ModifiyQuestion: false,
-      focus:true
+      focus: true
     })
   },
-  ModifiyContent(e){
+  ModifiyContent(e) {
     console.log(e.detail.value)
     this.setData({
       question: e.detail.value,
@@ -98,23 +97,20 @@ Page({
         background: '/images/Artboard_M.png',
         width: '254rpx',
         height: '250rpx',
-        views: [
-          {
-            type: 'text',
-            text: e.detail.value,
-            css: [{
-            },common],
-          },
-        ],
+        views: [{
+          type: 'text',
+          text: e.detail.value,
+          css: [{}, common],
+        }, ],
       },
     })
   },
-  ConfirmModifiy(){
+  ConfirmModifiy() {
     this.setData({
       ModifiyQuestion: true
     })
   },
-  CancelModifiy(){
+  CancelModifiy() {
     this.setData({
       ModifiyQuestion: true
     })
@@ -137,7 +133,27 @@ Page({
       url: `/pages/ask/receive/index?bankId=${this.data.bankId}`
     })
   },
-  sendQuestion() {
-
+  bindPickerChange(e) {
+    console.log(e.detail.value)
+    if (e.detail.value == 1) {
+      wx.navigateTo({
+        url: `/pages/ask/canvas/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}`,
+      })
+    } else {
+      this.shareToFriend()
+    }
+  },
+  shareToFriend() {
+    wx.chooseImage({
+      count: 1,
+      sourceType: ['album', 'camera'],
+      sizeType: ['original', 'compressed'],
+      success: (res) => {
+        const background = res.tempFilePaths[0]
+        wx.navigateTo({
+          url: `/pages/ask/canvas/index?background=${background}&question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId }`,
+        })
+      },
+    })
   }
 })

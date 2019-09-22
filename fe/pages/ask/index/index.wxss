@@ -21,3 +21,18 @@
   text-align: center;
   font-weight: bold;
 }
+.send_buttons {
+  text-align: center;
+  width: 100%;
+
+}
+.send_buttons .public-btn {
+  width: 280rpx;
+  display: inline-block;
+}
+.send_buttons .bg-gray {
+  margin-right: 10px;
+}
+.send_buttons .bg-yellow {
+  margin-left: 10px;
+}

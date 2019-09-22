@@ -6,7 +6,8 @@
     "pages/ask/receive/index",
     "pages/ask/success/index",
     "pages/answer/index/index",
-    "pages/feedback/index"
+    "pages/feedback/index",
+    "pages/ask/canvas/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
