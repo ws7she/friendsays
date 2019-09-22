@@ -56,15 +56,20 @@ Page({
     });
   },
   getQuestionId(formId) {
+    console.log(formId)
     return utils.requestApi(`question/save`, {
       method: 'POST',
       data: {
-        bankId: this.data.bankId,
+        bankId: '',
         memberId: this.data.memberId,
-        formId
+        formId:formId,
+        questionId: '',
+        content: this.data.question
       }
     }).then(res => {
+      console.log(res)
       this.setData({
+        bankId:res,
         askQuestionId: res
       })
     })
@@ -89,8 +94,7 @@ Page({
       focus: true
     })
   },
-  ModifiyContent(e) {
-    console.log(e.detail.value)
+  ModifiyContent(e){
     this.setData({
       question: e.detail.value,
       sharePng: {
@@ -104,28 +108,74 @@ Page({
         }, ],
       },
     })
+    console.log(this.data.question)
+    console.log(this.data.bankId)
+    console.log(this.data.memberId)
+    console.log(this.data.askQuestionId)
   },
-  ConfirmModifiy() {
+  ConfirmModifiy(e){
+    // wx.toast
+    console.log(this.data.bankId)
+    console.log(this.data.memberId)
+    console.log(this.data.askQuestionId)
+
+    // utils.requestApi(`question/save`, {
+    //   method: 'POST',
+    //   data: {
+    //     bankId: this.data.bankId,
+    //     memberId: this.data.memberId,
+    //     formId: e.detail.formId,
+    //     questionId:this.data.question,
+    //     content: this.data.question
+    //   }
+    // }).then(res => {
+    //   console.log(res)
+    //   this.setData({
+    //     askQuestionId: res,
+    //     bankId:res
+    //   })
+    // })
+
+    // this.setData({
+    //   question: e.detail.value,
+    //   sharePng: {
+    //     background: '/images/Artboard_M.png',
+    //     width: '254rpx',
+    //     height: '250rpx',
+    //     views: [
+    //       {
+    //         type: 'text',
+    //         text: e.detail.value,
+    //         css: [{
+    //         }, common],
+    //       },
+    //     ],
+    //   },
+    // })
+
     this.setData({
       ModifiyQuestion: true
     })
   },
   CancelModifiy() {
     this.setData({
-      ModifiyQuestion: true
+      ModifiyQuestion: true,
+      // question: e.detail.value,
     })
   },
   onShareAppMessage(e) {
     let that = this
     console.log(that.data.shareimagePath)
     if (e.type == 'submit') {
+      console.log('submit')
       this.getQuestionId(e.detail.formId);
+      console.log(that.data)
     }
     return {
       title: this.data.question,
       // imageUrl: "/images/Artboard.png",
       imageUrl: that.data.shareimagePath,
-      path: `/pages/answer/index/index?question=${ this.data.question }&bankId=${ this.data.bankId }&user=${ this.data.userInfo.nickName }&askUserId=${ this.data.memberId }`,
+      path: `/pages/answer/index/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${ this.data.userInfo.nickName }&askUserId=${ this.data.memberId }`,
     }
   },
   go2receive() {

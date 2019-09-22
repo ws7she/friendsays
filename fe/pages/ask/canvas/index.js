@@ -81,6 +81,7 @@ Page({
           success: (data) => {
             wx.showToast({
               title: '图片成功保存到相册，快去发朋友圈吧！',
+              duration: 300,
               success: ()=> {
                 wx.navigateTo({
                   url: '/pages/ask/index/index',
@@ -90,7 +91,9 @@ Page({
           },
           fail: (e) => {
             wx.showToast({
-              title: '图片成功失败，请重试！'
+              title: '图片存储失败，请重试！',
+              icon: 'fail',
+              duration: 300
             })
           }
         })
