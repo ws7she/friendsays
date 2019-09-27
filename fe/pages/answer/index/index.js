@@ -23,6 +23,43 @@ Page({
   },
   onLoad: function(options) {
     let me = this;
+    if (options.scene) {
+      const scene = decodeURIComponent(options.scene)
+      utils.requestApi(`member/getInfoByScene?scene=${scene}`).then(res => {
+        const result = `?${res.data}`
+        options.question = this.getUrlParam('question', result)
+        options.bankId = this.getUrlParam('bankId', result)
+        options.user = this.getUrlParam('user', result)
+        options.askUserId = this.getUrlParam('askUserId', result)
+        this.setOptions(options)
+      }).catch(e => {
+        wx.showToast({
+          title: '扫码解析失败' + e,
+          duration: 300,
+          icon: 'fail'
+        })
+      })
+    } else {
+      this.setOptions(options)
+    }
+
+    
+  },
+  onShow() {},
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onReady: function(options) {
+    this.getTags();
+  },
+  getUrlParam(urlParams, scene) {
+    let reg = new RegExp("(^|&)" + urlParams + "=([^&]*)(&|$)");  
+    let regUrl = scene.substr(1).match(reg);
+    if (regUrl != null) return unescape(regUrl[2]);
+    return null;
+  }, 
+  setOptions(options) {
+    let me = this;
     wx.setStorageSync('askUserId', options.askUserId);
     wx.setStorageSync('question', options.question);
     wx.setStorageSync('bankId', options.bankId);
@@ -47,14 +84,6 @@ Page({
       })
     }
   },
-  onShow() {},
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onReady: function(options) {
-    this.getTags();
-  },
-
   onShareAppMessage: function() {
     console.log(22222222)
   },

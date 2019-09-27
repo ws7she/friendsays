@@ -32,18 +32,18 @@ Page({
     })
   },
   getPhoneNumber(e) {
-    console.log(e.detail)
-    wx.setStorageSync('phone', e.detail.encryptedData)
+    // wx.setStorageSync('phone', e.detail.encryptedData)
     let userInfo = wx.getStorageSync('userInfo');
-    if (e.detail.errMsg == 'getPhoneNumber:ok') {
+    // if (e.detail.errMsg == 'getPhoneNumber:ok') {
+    if (true) {
       utils.requestApi(`member/save`, {
         method: 'POST',
         data: {
           userData: userInfo.encryptedData,
           userIV: userInfo.iv,
           memberId: wx.getStorageSync('memberId'),
-          phoneData: e.detail.encryptedData,
-          phoneIV: e.detail.iv
+          // phoneData: e.detail.encryptedData,
+          // phoneIV: e.detail.iv
         }
       })
       try {
@@ -83,8 +83,10 @@ Page({
           iv: res.iv
         });
         this.setData({
-          showPhone: true
+          // showPhone: true
+          showPhone: false
         })
+        this.getPhoneNumber()
       }
     })
   }
