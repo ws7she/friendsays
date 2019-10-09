@@ -78,8 +78,8 @@ Page({
         questionId: options.questionId
       })
     } else {
-      utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
-        console.log(res, options, '--------questionid ----')
+      const params = options.questionChanged ? `content=${options.question}` : `bankId=${options.bankId}`
+      utils.requestApi(`question/getQuestion?&${params}memberId=${options.askUserId}`).then(res => {
         me.setData({
           questionId: res.questionId,
         })
@@ -192,7 +192,6 @@ Page({
           tagStatus: this.data.tagStatus ? 1 : 0,
         }
       }).then(res => {
-        console.log(res, 123214324231423)
         wx.navigateTo({
           url: '/pages/ask/success/index',
         })

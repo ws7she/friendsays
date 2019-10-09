@@ -39,6 +39,7 @@ Page({
   getQuestion() {
     return utils.requestApi(`question/next?bankId=${this.data.bankId}`).then(res => {
       this.setData({
+        questionChanged: '',
         question: res.content,
         sendTo: res.groupName,
         bankId: res.bankId,
@@ -58,14 +59,18 @@ Page({
     });
   },
   getQuestionId(formId) {
+    const data = {
+      memberId: this.data.memberId,
+      formId,
+    }
+    if (this.data.questionChanged) {
+      data.content = this.data.question
+    } else {
+      data.bankId = this.data.bankId
+    }
     return utils.requestApi(`question/save`, {
       method: 'POST',
-      data: {
-        bankId: this.data.bankId,
-        memberId: this.data.memberId,
-        formId,
-        content: this.data.question
-      }
+      data
     }).then(res => {
       this.setData({
         bankId: res,
@@ -120,30 +125,31 @@ Page({
 
   CancelModifiy() {
     this.setData({
+      questionChanged: '',
       ModifiyStatus: true,
     })
   },
 
   ConfirmModifiy(e) {
-    console.log(e, this.data)
     this.setData({
       ModifiyQuestion: true
     })
   },
   
   onShareAppMessage(e) {
-    let that = this
-    console.log(that.data.shareimagePath)
     if (e.type == 'submit') {
-      console.log('submit')
       this.getQuestionId(e.detail.formId);
-      console.log(that.data)
+    }
+    let path
+    if (this.data.questionChanged) {
+      path = `/pages/answer/index/index?question=${this.data.question}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}&questionChanged=${true}`
+    } else {
+      path = `/pages/answer/index/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}`
     }
     return {
       title: this.data.question,
-      // imageUrl: "/images/Artboard.png",
-      imageUrl: that.data.shareimagePath,
-      path: `/pages/answer/index/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${ this.data.userInfo.nickName }&askUserId=${ this.data.memberId }`,
+      imageUrl: this.data.shareimagePath,
+      path,
     }
   },
   go2receive() {
@@ -152,7 +158,6 @@ Page({
     })
   },
   bindPickerChange(e) {
-    console.log(e.detail.value)
     if (e.detail.value == 1) {
       wx.navigateTo({
         url: `/pages/ask/canvas/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}`,
