@@ -15,16 +15,14 @@
         <view class='user-info'>
           <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
         </view>
-        <text class='question_ask'>{{question}}</text>
-        <text class='tips'>此问题更合适发送给{{sendTo}}</text>
+        <text class='question_ask'  bindtap='ModifiyShow'>{{question}}</text>
+        <text class='tips'  bindtap='ModifiyShow'>轻触可手动编辑问题</text>
         <button class='public-btn bg-white' bindtap='getQuestion'>
           <image src='/images/change.png' class='public-icon' />
           <text class='public-icon_text'>更换问题</text>
         </button>
       </view>
       <painter style="position:fixed;top:-9999rpx" palette="{{sharePng}}" bind:imgOK="onImgOK" />
-      <view class="tips" style="margin-top:60rpx" bindtap='ModifiyShow'>
-        轻触这里可手动编辑问题</view>
     </view>
     <modal hidden="{{ModifiyStatus}}" confirm-text="编辑完成" bindconfirm="setModifiyContent" no-cancel="" cancel-text="取消" bindcancel="CancelModifiy">
       <textarea placeholder="这里是要编辑的问题" value="{{questionChanged}}" focus="{{focus}}" show-confirm-bar='false' bindblur='changeContent'></textarea>
