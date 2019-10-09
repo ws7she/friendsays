@@ -2,6 +2,7 @@
 const utils = require('../../../utils/util.js')
 
 Page({
+  replyMessage: {},
   data: {
     questionId: '',
     question: '',
@@ -34,7 +35,10 @@ Page({
         value: '其他'
       },
 
-    ]
+    ],
+    replyInfo: {},
+    chooseList: ['使用照片做背景', '无背景'],
+    chooseType: null
   },
   radioChange: function(e) {
     this.setData({
@@ -52,7 +56,6 @@ Page({
     this.setData({
       hidden_reply: true,
       hidden_report: false,
-      // answerId: e.currentTarget.dataset.answerid
     });
   },
   hidden_reply: function (e) {
@@ -174,7 +177,6 @@ Page({
   },
   getAnswers() {
     return utils.requestApi(`answer/list?questionId=${this.data.questionId}`).then(res => {
-      console.log('-----------' + res.data)
       this.setData({
         messagesList: res.content,
         totalLength: res.total
@@ -185,7 +187,7 @@ Page({
     let questions = this.data.messagesList.map(function(item) {
       return item.answerId
     });
-    if (questions.length === 0) return
+    if (this.data.messagesList.length === 0) return
     return utils.requestApi(`answer/read`, {
       method: 'POST',
       data: {
@@ -253,6 +255,63 @@ Page({
       this.getAnswers()
     }).catch(e => {
       this.getAnswers()
+    })
+  },
+  reply_answer(e) {
+    const index = e.currentTarget.dataset.reply;
+    if (this.replyMessage[index]) {
+      this.replyMessage[index].show = true
+    } else {
+      this.replyMessage[index] = {
+        show: true,
+        answer: e.currentTarget.dataset.answer,
+        tag: e.currentTarget.dataset.tag,
+        replyContent: '',
+        index
+      }
+    }
+    this.setData({
+      replyInfo: this.replyMessage[index]
+    })
+  },
+  hideReply() {
+    const info = {...this.data.replyInfo}
+    info.show = false;
+    this.setData({
+      replyInfo: info
+    })
+  },
+  bindTextArea(e) {
+    this.replyMessage[this.data.replyInfo.index].replyContent = e.detail.value
+    const info = JSON.parse(JSON.stringify(this.data.replyInfo))
+    info.replyContent = e.detail.value
+    this.setData({
+      replyInfo: info
+    })
+  },
+  bindPickerChange(e) {
+    const { replyInfo } = this.data
+    const userInfo = wx.getStorageSync('userInfo')
+    if (e.detail.value == 1) {
+      wx.navigateTo({
+        url: `/pages/ask/canvas/index?question=${this.data.question}&questionId=${this.data.questionId}&askUserId=${wx.getStorageSync('memberId')}&tag=${replyInfo.tag}&answer=${replyInfo.answer}&replyContent=${replyInfo.replyContent}&user=${userInfo.nickName}`,
+        //差了个user
+      })
+    } else {
+      this.shareToFriend(replyInfo, userInfo)
+    }
+  },
+  shareToFriend(replyInfo, userInfo) {
+    wx.chooseImage({
+      count: 1,
+      sourceType: ['album', 'camera'],
+      sizeType: ['original', 'compressed'],
+      success: (res) => {
+        const background = res.tempFilePaths[0]
+        wx.navigateTo({
+          url: `/pages/ask/canvas/index?question=${this.data.question}&questionId=${this.data.questionId}&askUserId=${wx.getStorageSync('memberId')}&tag=${replyInfo.tag}&answer=${replyInfo.answer}&replyContent=${replyInfo.replyContent}&user=${userInfo.nickName}`,
+        })
+      }
     })
   }
 })

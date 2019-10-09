@@ -19,7 +19,9 @@ Page({
     memberId: '',
     totalMessage: 0,
     askQuestionId: '',
-    ModifiyQuestion: true,
+
+    questionChanged: '',
+    ModifiyStatus: true,
     focus: false,
     shareimagePath: '',
 
@@ -56,20 +58,17 @@ Page({
     });
   },
   getQuestionId(formId) {
-    console.log(formId)
     return utils.requestApi(`question/save`, {
       method: 'POST',
       data: {
-        bankId: '',
+        bankId: this.data.bankId,
         memberId: this.data.memberId,
-        formId:formId,
-        questionId: '',
+        formId,
         content: this.data.question
       }
     }).then(res => {
-      console.log(res)
       this.setData({
-        bankId:res,
+        bankId: res,
         askQuestionId: res
       })
     })
@@ -86,83 +85,52 @@ Page({
     this.setData({
       shareimagePath: e.detail.path
     })
-    console.log(e);
   },
-  ModifiyQuestion() {
+
+  changeContent(e) {
     this.setData({
-      ModifiyQuestion: false,
+      questionChanged: e.detail.value
+    })
+  },
+  
+  ModifiyShow() {
+    this.setData({
+      questionChanged: this.data.question,
+      ModifiyStatus: false,
       focus: true
     })
   },
-  ModifiyContent(e){
+
+  setModifiyContent() {
     this.setData({
-      question: e.detail.value,
       sharePng: {
         background: '/images/Artboard_M.png',
         width: '254rpx',
         height: '250rpx',
         views: [{
           type: 'text',
-          text: e.detail.value,
+          text: this.data.questionChanged,
           css: [{}, common],
-        }, ],
+        },],
       },
+      ModifiyStatus: true,
+      question: this.data.questionChanged
     })
-    console.log(this.data.question)
-    console.log(this.data.bankId)
-    console.log(this.data.memberId)
-    console.log(this.data.askQuestionId)
   },
-  ConfirmModifiy(e){
-    // wx.toast
-    console.log(this.data.bankId)
-    console.log(this.data.memberId)
-    console.log(this.data.askQuestionId)
 
-    // utils.requestApi(`question/save`, {
-    //   method: 'POST',
-    //   data: {
-    //     bankId: this.data.bankId,
-    //     memberId: this.data.memberId,
-    //     formId: e.detail.formId,
-    //     questionId:this.data.question,
-    //     content: this.data.question
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    //   this.setData({
-    //     askQuestionId: res,
-    //     bankId:res
-    //   })
-    // })
+  CancelModifiy() {
+    this.setData({
+      ModifiyStatus: true,
+    })
+  },
 
-    // this.setData({
-    //   question: e.detail.value,
-    //   sharePng: {
-    //     background: '/images/Artboard_M.png',
-    //     width: '254rpx',
-    //     height: '250rpx',
-    //     views: [
-    //       {
-    //         type: 'text',
-    //         text: e.detail.value,
-    //         css: [{
-    //         }, common],
-    //       },
-    //     ],
-    //   },
-    // })
-
+  ConfirmModifiy(e) {
+    console.log(e, this.data)
     this.setData({
       ModifiyQuestion: true
     })
   },
-  CancelModifiy() {
-    this.setData({
-      ModifiyQuestion: true,
-      // question: e.detail.value,
-    })
-  },
+  
   onShareAppMessage(e) {
     let that = this
     console.log(that.data.shareimagePath)

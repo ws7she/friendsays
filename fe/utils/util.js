@@ -28,6 +28,7 @@ const requestApi = (urlparams, requestInfo = {}, option = {}) => {
         if (requestInfo.responseType == 'arraybuffer') {
           resolve(res.data)
         } else {
+          console.log(res, '---------------')
           resolve(res.data.data);
         }
       },

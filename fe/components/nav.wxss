@@ -10,7 +10,6 @@
   color: #000;
   z-index: 99;
   height: 46px;
-  
 }
 .nav-left {
   display: flex;

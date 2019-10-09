@@ -62,6 +62,12 @@
   line-height: 25px;
   position: relative;
 }
+.detail_item {
+  display: flex;
+}
+.reply-item-left {
+  flex: 1;
+}
 .detail_item_tag {
   padding-top: 20rpx;
   border-top: 1px solid #F0F0F0;
@@ -116,3 +122,43 @@
   align-items: center; 
   right: -160px; 
 }  
+
+.reply_detail {
+  position: fixed;
+  z-index: 10000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  padding-top: 16px;
+}
+.reply_title {
+  color: gray;
+  font-size: 12px;
+  padding-left: 16px;
+  padding-bottom: 8px;
+}
+.reply_tag {
+  font-size: 14px;
+  padding-left: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #F0F0F0;
+}
+.reply_text {
+  margin: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+.reply_btn {
+  width: 100%;
+  border-radius: 10px;
+}
+.detail_item_reply {
+  padding-left: 16rpx;
+}
+.detail_reply_icon {
+  width: 50rpx;
+  height: 70rpx;
+  margin-top: 36rpx;
+}

@@ -11,15 +11,26 @@ Page({
    * 页面的初始数据
    */
   data: {
-    radarImg: null
+    isReply: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const scene = `question=${options.question}&bankId=${options.bankId}&user=${options.user}&askUserId=${options.askUserId }`
-    requestApi(`member/getQRCode?page=pages/answer/index/index&scene=${encodeURIComponent(scene)}&is_hyaline=true`, {
+    let scene
+    if (options.questionId) {
+      scene = `question=${options.question}&questionId=${options.questionId}&askUserId=${options.askUserId}&tag=${options.tag}&answer=${options.answer}&replyContent=${options.replyContent}&user=${options.user}`
+      this.setData({
+        isReply: true
+      })
+    } else {
+      scene = `question=${options.question}&bankId=${options.bankId}&user=${options.user}&askUserId=${options.askUserId}`
+      this.setData({
+        isReply: false
+      })
+    }
+    requestApi(`member/getQRCode?page=pages/answer/index/index&scene=${encodeURIComponent(scene)}&`, {
       header: {
         type: 'application/octet-stream'
       },
@@ -46,7 +57,7 @@ Page({
     wx.getImageInfo({
       src: userImage,
       success: (res) => {
-        this.drawCanvas(options.background, options.question, res.path, qrCode)
+        this.drawCanvas(options.background, options.question, res.path, qrCode, options)
       },
       fail: (e) => {
         wx.showToast({
@@ -59,7 +70,7 @@ Page({
       }
     })
   },
-  drawCanvas(image, question, userImage, qrCode) {
+  drawCanvas(image, question, userImage, qrCode, others) {
     const ctx = wx.createCanvasContext('canvas');
     const {
       windowWidth,
@@ -76,26 +87,61 @@ Page({
     }
     ctx.save()
 
+    // 画边框
+    ctx.setFillStyle('#fff')
+    ctx.fillRect(0, 0, windowWidth, 10)
+    ctx.fillRect(0, 0, 10, windowHeight - 86)
+    ctx.fillRect(windowWidth - 10, 0, 10, windowHeight - 86)
+    ctx.fillRect(0, windowHeight - 86 - 125, windowWidth, 125)
+    ctx.save()
+
     ctx.setFillStyle('#c3c3c3')
     ctx.setFontSize(12)
-    ctx.fillText('长按扫一扫即可匿名回复Ta!', 10, windowHeight - 120)
+    ctx.fillText('长按扫一扫即可匿名回复Ta!', 20, windowHeight - 150)
     ctx.save()
 
-    roundRect(ctx, rectCenter, 140, 300, 200, 10)
+    roundRect(ctx, rectCenter, 140, 300, 220, 10)
     ctx.setFillStyle('#fff')
-    ctx.fillRect(rectCenter, 140, 300, 200)
+    ctx.fillRect(rectCenter, 140, 300, 220)
     ctx.restore()
 
-    ctx.setFillStyle('#000')
-    ctx.setFontSize(16)
-    drawText(ctx, question, textCenter, 220, 180, windowWidth - (textCenter * 2))
-    ctx.save()
+    if (!this.data.isReply) {
+      ctx.setFillStyle('#000')
+      ctx.setFontSize(16)
+      drawText(ctx, question, textCenter, 220, 180, windowWidth - (textCenter * 2))
+      ctx.save()
+    } else {
+      //问题
+      ctx.setFillStyle('gray')
+      ctx.setFontSize(13)
+      ctx.fillText(question, rectCenter + 20, 200)
+
+      //关系链
+      ctx.setFillStyle('#000')
+      ctx.setFontSize(13)
+      ctx.fillText(others.tag + ':' + others.answer, rectCenter + 20, 225)
+      
+      // 画线
+      ctx.beginPath()
+      ctx.setStrokeStyle('#c3c3c3')
+      ctx.moveTo(rectCenter + 10, 240)
+      ctx.lineTo(windowWidth - (rectCenter + 10), 240)
+      ctx.stroke()
+      
+      //回复
+      ctx.setFillStyle('#000')
+      ctx.font = 'normal bold 16px sans-serif'
+      drawText(ctx, others.replyContent, textCenter, 265, 180, windowWidth - (textCenter * 2))
+
+      ctx.save()
+    }
+    
 
     roundRect(ctx, picCenter, 100, 80, 80, 40)
     ctx.drawImage(userImage, picCenter, 100, 80, 80)
     ctx.restore()
 
-    ctx.drawImage(qrCode, windowWidth - 80, windowHeight - 166, 80, 80)
+    ctx.drawImage(qrCode, windowWidth - 120, windowHeight - 206, 120, 120)
     ctx.draw()
   },
   saveCanvas() {

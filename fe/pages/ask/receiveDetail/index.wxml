@@ -10,17 +10,14 @@
     <text>来自朋友们的问答</text>
   </view>
 </view>
-<modal hidden="{{hidden_reply}}" confirm-text="举报" bindconfirm="hidden_reply_confirm" no-cancel="{{nocancel}}" cancel-text="取消" bindcancel = "hidden_reply">
-  <text decode="{{true}}" space="{{true}}">
-    "回复功能暂未上线，望大爷您耐心等等哦~"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——瑟瑟发抖的开发团队
-  </text>
+<modal hidden="{{hidden_reply}}" confirm-text="举报" bindconfirm="hidden_reply_confirm" no-cancel="{{nocancel}}" cancel-text="取消" bindcancel="hidden_reply">
+  <view style='text-align: center; color: #333333; font-size: 14px'>确认举报吗</view>
 </modal>
 <modal hidden="{{hidden_report}}" confirm-text="举报" cancel-text="取消" bindcancel="cancel" bindconfirm="reportfinally" no-cancel="{{report_nocancel}}">
   您举报的原因是：
   <radio-group class="radio-group" bindchange="radioChange">
     <label class="radio" wx:for="{{report_items}}">
-      <radio value="{{item.name}}" checked="{{item.checked}}" />
-      {{item.value}}
+      <radio value="{{item.name}}" checked="{{item.checked}}" /> {{item.value}}
     </label>
   </radio-group>
 </modal>
@@ -28,18 +25,25 @@
   <view wx:for='{{messagesList}}' class='list-item_over' wx:key='{{index}}'>
     <view class='detail-list_item' style='right: {{item.right || 0}}rpx' bindtouchstart='drawStart' bindtouchmove="drawMove" bindtouchend="drawEnd" data-index='{{index}}'>
       <image src='/images/noread_icon.png' class='detail_noread_icon' wx:if='{{item.readStatus === 0}}' />
-      <view class='detail_item_ans' bindtap="report" data-answerid='{{item.answerId}}'>
-        {{item.content}}
-      </view>
-      <view class='detail_item_tag'>
-        <text>关系线索：</text>
-        <text wx:for='{{item.tags}}' wx:if='{{item.tags.length != 0}}'>
-          <text>“</text>
-          <text class='specical-tag'>{{item}}</text>
-          <text>”</text>
-          <text wx:if='{{totalLength != index - 1}}'>、</text>
-        </text>
-        <text wx:if='{{item.tags.length == 0}}'>无</text>
+      <view class='detail_item'>
+        <view class='reply-item-left'>
+          <view class='detail_item_ans' bindtap="report" data-answerid='{{item.answerId}}'>
+            {{item.content}}
+          </view>
+          <view class='detail_item_tag'>
+            <text>关系线索：</text>
+            <text wx:for='{{item.tags}}' wx:if='{{item.tags.length != 0}}' wx:key='{{index}}'>
+              <text>“</text>
+            <text class='specical-tag'>{{item}}</text>
+            <text>”</text>
+            <text wx:if='{{totalLength != index - 1}}'>、</text>
+            </text>
+            <text wx:if='{{item.tags.length == 0}}'>无</text>
+          </view>
+        </view>
+        <view class='detail_item_reply' bindtap='reply_answer' data-reply='{{index}}' data-answer='{{item.content}}' data-tag='{{item.tags[0] || ""}}'>
+          <image src='/images/reply.png' class='detail_reply_icon'></image>
+        </view>
       </view>
     </view>
     <view class='remove' data-content='{{item.content}}' data-answerid='{{item.answerId}}' bindtap='removeAnswer' style='right: {{-160 + (item.right || 0)}}rpx'>
@@ -54,4 +58,14 @@
     <text class="public-icon_text">发到微信群</text>
   </button>
 </view>
-<view class='detail_bottom'>微信小程序搜索“朋友说App”，来这里友说友笑</view>
+<view class='detail_bottom'>微信小程序搜索“朋友说App”，换个方式发朋友圈</view>
+
+<view class='cover' wx:if='{{replyInfo.show}}' bindtap='hideReply'></view>
+<view class='reply_detail' wx:if='{{replyInfo.show}}'>
+  <view class='reply_title'>{{question}}</view>
+  <view class='reply_tag'>{{replyInfo.tag}} : {{replyInfo.answer}}</view>
+  <textarea class='reply_text' maxlength='50' value='{{replyInfo.replyContent}}' bindblur='bindTextArea'></textarea>
+  <picker range='{{chooseList}}' value='{{chooseType}}' bindchange='bindPickerChange'>
+    <button class='public-btn bg-yellow reply_btn'>回复</button>
+  </picker>
+</view>

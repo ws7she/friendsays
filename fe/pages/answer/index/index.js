@@ -29,6 +29,7 @@ Page({
         const result = `?${res.data}`
         options.question = this.getUrlParam('question', result)
         options.bankId = this.getUrlParam('bankId', result)
+        options.questionId = this.getUrlParam('questionId', result)
         options.user = this.getUrlParam('user', result)
         options.askUserId = this.getUrlParam('askUserId', result)
         this.setOptions(options)
@@ -43,7 +44,7 @@ Page({
       this.setOptions(options)
     }
 
-    
+
   },
   onShow() {},
   /**
@@ -53,11 +54,11 @@ Page({
     this.getTags();
   },
   getUrlParam(urlParams, scene) {
-    let reg = new RegExp("(^|&)" + urlParams + "=([^&]*)(&|$)");  
+    let reg = new RegExp("(^|&)" + urlParams + "=([^&]*)(&|$)");
     let regUrl = scene.substr(1).match(reg);
     if (regUrl != null) return unescape(regUrl[2]);
     return null;
-  }, 
+  },
   setOptions(options) {
     let me = this;
     wx.setStorageSync('askUserId', options.askUserId);
@@ -78,14 +79,12 @@ Page({
       })
     } else {
       utils.requestApi(`question/getQuestion?bankId=${options.bankId}&memberId=${options.askUserId}`).then(res => {
+        console.log(res, options, '--------questionid ----')
         me.setData({
           questionId: res.questionId,
         })
       })
     }
-  },
-  onShareAppMessage: function() {
-    console.log(22222222)
   },
   Login() {
     let me = this;
@@ -94,8 +93,14 @@ Page({
         if (res.code) {
           utils.requestApi(`member/auth?authCode=${res.code}`).then(data => {
             if (data == me.data.askUserId) {
+              let url
+              if (wx.getStorageSync('bankId')) {
+                url = `/pages/ask/receive/index`
+              } else {
+                url = `/pages/ask/receive/index`
+              }
               wx.reLaunch({
-                url: '/pages/ask/index/index',
+                url
               })
             } else {
               me.setData({
@@ -108,22 +113,22 @@ Page({
     })
   },
   chooseTag(e) {
-    if (this.data.choose_list.length >= 5) {
-      wx.showToast({
-        title: '最多只能选择5个标签呦~',
-        icon: 'none',
-        duration: 2000
+    let tagId = e.currentTarget.dataset.tag;
+    let isDetail = e.currentTarget.dataset.type == 'detail';
+    const me = this;
+    const index = me.data.choose_list.indexOf(tagId);
+    if (index > -1) {
+      const arr = [...me.data.choose_list]
+      arr.splice(index, 1)
+      this.setData({
+        choose_list: arr
       })
     } else {
-      let tagId = e.currentTarget.dataset.tag;
-      let isDetail = e.currentTarget.dataset.type == 'detail';
-      const me = this;
-      const index = me.data.choose_list.indexOf(tagId);
-      if (index > -1) {
-        const arr = [...me.data.choose_list]
-        arr.splice(index, 1)
-        this.setData({
-          choose_list: arr
+      if (this.data.choose_list.length >= 5) {
+        wx.showToast({
+          title: '最多只能选择5个标签呦~',
+          icon: 'none',
+          duration: 2000
         })
       } else {
         this.setData({
@@ -131,7 +136,7 @@ Page({
         })
       }
     }
-    return false;
+
   },
   getTags() {
     return utils.requestApi('answer/tag?type=1').then(res => {
@@ -187,6 +192,7 @@ Page({
           tagStatus: this.data.tagStatus ? 1 : 0,
         }
       }).then(res => {
+        console.log(res, 123214324231423)
         wx.navigateTo({
           url: '/pages/ask/success/index',
         })
@@ -194,5 +200,5 @@ Page({
     }
 
   },
-  
+
 })

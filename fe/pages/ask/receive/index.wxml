@@ -1,6 +1,6 @@
 <!--pages/ask/receive/index.wxml-->
 
-<Nav title='朋友说' isShow='{{true}}' isShowBack='{{true}}'></Nav>
+<Nav title='朋友说' isShow='{{true}}' isShowHome='{{true}}'></Nav>
 <form wx:for='{{tags}}' wx:key='{{item.questionId}}' data-questionid='{{item.questionId}}' data-question='{{item.content}}' bindsubmit="go2detail" report-submit='true'>
   <button class='receive-card public-top reset-button'formType="submit">
     <view class='receive-card-item'>

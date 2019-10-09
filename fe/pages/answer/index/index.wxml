@@ -7,7 +7,7 @@
         <view class='user-info'>
           <image class='user-photo' src='{{userInfo.avatarUrl}}'></image>
         </view>
-        <text class='ask_title'>{{friend_name}}向你提问</text>
+        <text class='ask_title'>{{friend_name || 'Ta'}}向你提问</text>
         <text class='question_ask'>{{question}}</text>
       </view>
     </view>
@@ -42,6 +42,7 @@
         <view class='{{tools.checkTag(item.tagId, choose_list) ? "relation_icon selected" : "relation_icon"}}' wx:for='{{item.tags}}' wx:key='{{item.tagId}}' data-tag='{{item.tagId}}' data-type='detail' catchtap='chooseTag'>{{item.name}}</view>
       </view>
     </view>
+    <!-- <picker></picker> -->
     <button class='public-btn bg-yellow' bindtap='chooseRelation'>确认选择</button>
   </view>
 </form>
