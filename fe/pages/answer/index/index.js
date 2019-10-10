@@ -32,6 +32,8 @@ Page({
         options.questionId = this.getUrlParam('questionId', result)
         options.user = this.getUrlParam('user', result)
         options.askUserId = this.getUrlParam('askUserId', result)
+        options.askUserId = this.getUrlParam('askUserId', result)
+        options.questionChanged = this.getUrlParam('questionChanged', result)
         this.setOptions(options)
       }).catch(e => {
         wx.showToast({
@@ -79,7 +81,7 @@ Page({
       })
     } else {
       const params = options.questionChanged ? `content=${options.question}` : `bankId=${options.bankId}`
-      utils.requestApi(`question/getQuestion?&${params}memberId=${options.askUserId}`).then(res => {
+      utils.requestApi(`question/getQuestion?${params}&memberId=${options.askUserId}`).then(res => {
         me.setData({
           questionId: res.questionId,
         })

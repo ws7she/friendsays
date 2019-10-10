@@ -11,7 +11,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isReply: false
+    isReply: false,
+    urlOptions: {}
   },
 
   /**
@@ -19,13 +20,16 @@ Page({
    */
   onLoad: function(options) {
     let scene
+    this.setData({
+      urlOptions: options
+    })
     if (options.questionId) {
       scene = `question=${options.question}&questionId=${options.questionId}&askUserId=${options.askUserId}&tag=${options.tag}&answer=${options.answer}&replyContent=${options.replyContent}&user=${options.user}`
       this.setData({
         isReply: true
       })
     } else {
-      scene = `question=${options.question}&bankId=${options.bankId}&user=${options.user}&askUserId=${options.askUserId}`
+      scene = `question=${options.question}&bankId=${options.bankId}&user=${options.user}&askUserId=${options.askUserId}&questionChanged=${options.questionChanged}`
       this.setData({
         isReply: false
       })
@@ -144,7 +148,8 @@ Page({
     ctx.drawImage(qrCode, windowWidth - 120, windowHeight - 206, 120, 120)
     ctx.draw()
   },
-  saveCanvas() {
+  saveCanvas(e) {
+    this.savaQuestion(e)
     wx.canvasToTempFilePath({
       canvasId: 'canvas',
       quality: 1,
@@ -163,14 +168,34 @@ Page({
             })
           },
           fail: (e) => {
-            wx.showToast({
-              title: '图片存储失败，请重试！',
-              icon: 'fail',
-              duration: 10000
-            })
+            // wx.showToast({
+            //   title: '图片存储失败，请重试！',
+            //   icon: 'fail',
+            //   duration: 10000
+            // })
           }
         })
       }
     })
+  },
+  savaQuestion(e) {
+    const { questionId, askUserId, question, bankId, questionChanged } = this.data.urlOptions
+    if (!questionId) {
+      const data = {
+        memberId: askUserId,
+        formId: e.detail.formId,
+      }
+      if (questionChanged) {
+        data.content = question
+      } else {
+        data.bankId = bankId
+      }
+      return requestApi(`question/save`, {
+        method: 'POST',
+        data
+      })
+    } else {  
+      return
+    }
   }
 })

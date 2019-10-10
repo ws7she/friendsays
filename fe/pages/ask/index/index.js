@@ -142,7 +142,7 @@ Page({
     }
     let path
     if (this.data.questionChanged) {
-      path = `/pages/answer/index/index?question=${this.data.question}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}&questionChanged=${true}`
+      path = `/pages/answer/index/index?question=${this.data.question}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}&questionChanged=${this.data.questionChanged}`
     } else {
       path = `/pages/answer/index/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}`
     }
@@ -160,11 +160,12 @@ Page({
   bindPickerChange(e) {
     if (e.detail.value == 1) {
       wx.navigateTo({
-        url: `/pages/ask/canvas/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}`,
+        url: `/pages/ask/canvas/index?question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}&questionChanged=${this.data.questionChanged}`,
       })
     } else {
       this.shareToFriend()
     }
+
   },
   shareToFriend() {
     wx.chooseImage({
@@ -174,7 +175,7 @@ Page({
       success: (res) => {
         const background = res.tempFilePaths[0]
         wx.navigateTo({
-          url: `/pages/ask/canvas/index?background=${background}&question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId }`,
+          url: `/pages/ask/canvas/index?background=${background}&question=${this.data.question}&bankId=${this.data.bankId}&user=${this.data.userInfo.nickName}&askUserId=${this.data.memberId}&questionChanged=${this.data.questionChanged ? true : false}`,
         })
       },
     })
