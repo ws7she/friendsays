@@ -9,7 +9,9 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"nodeModules": false,
 		"autoAudits": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",

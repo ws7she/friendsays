@@ -25,13 +25,34 @@ const requestApi = (urlparams, requestInfo = {}, option = {}) => {
       headers, 
       responseType: requestInfo.responseType ? requestInfo.responseType : 'text',
       success: function(res) {
-        if (requestInfo.responseType == 'arraybuffer') {
-          resolve(res.data)
-        } else {
-          resolve(res.data.data);
+        try {
+          if (requestInfo.responseType == 'arraybuffer') {
+            resolve(res.data)
+          } else {
+            if (res.data.state === 0) {
+              resolve(res.data.data);
+            } else {
+              wx.showToast({
+                title: res.data.message,
+                icon: 'none'
+              })
+              reject(res.data.message);
+            }
+          }
+        } catch(e) {
+          wx.showToast({
+            title: e,
+            icon: 'none'
+          })
+          reject(e)
         }
+        
       },
       fail: function(e) {
+        wx.showToast({
+          title: res.data.message,
+          icon: 'none'
+        })
         reject(e);
       }
     })

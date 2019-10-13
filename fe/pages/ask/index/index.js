@@ -1,5 +1,6 @@
 const app = getApp()
 const utils = require('../../../utils/util.js');
+
 const common = {
   left: '-20rpx',
   right: '50rpx',
@@ -16,7 +17,7 @@ Page({
     sendTo: '',
     question: '',
     bankId: '',
-    memberId: '',
+    memberId: wx.getStorageSync('memberId'),
     totalMessage: 0,
     askQuestionId: '',
 
@@ -27,7 +28,7 @@ Page({
 
     sharePng: {},
     chooseList: ['使用照片做背景', '无背景'],
-    chooseType: null
+    chooseType: null,
   },
   onShow() {
     this.getQuestionCount();
@@ -44,7 +45,6 @@ Page({
         sendTo: res.groupName,
         bankId: res.bankId,
         userInfo: wx.getStorageSync('userInfo'),
-        memberId: wx.getStorageSync('memberId'),
         sharePng: {
           background: '/images/Artboard_M.png',
           width: '254rpx',
@@ -71,11 +71,6 @@ Page({
     return utils.requestApi(`question/save`, {
       method: 'POST',
       data
-    }).then(res => {
-      this.setData({
-        bankId: res,
-        askQuestionId: res
-      })
     })
   },
   getQuestionCount() {
@@ -107,20 +102,28 @@ Page({
   },
 
   setModifiyContent() {
-    this.setData({
-      sharePng: {
-        background: '/images/Artboard_M.png',
-        width: '254rpx',
-        height: '250rpx',
-        views: [{
-          type: 'text',
-          text: this.data.questionChanged,
-          css: [{}, common],
-        },],
-      },
-      ModifiyStatus: true,
-      question: this.data.questionChanged
+    utils.requestApi('question/msgCheck', {
+      method: 'POST',
+      data: {
+        "content": this.data.questionChanged,
+      }
+    }).then(() => {
+      this.setData({
+        sharePng: {
+          background: '/images/Artboard_M.png',
+          width: '254rpx',
+          height: '250rpx',
+          views: [{
+            type: 'text',
+            text: this.data.questionChanged,
+            css: [{}, common],
+          },],
+        },
+        ModifiyStatus: true,
+        question: this.data.questionChanged
+      })
     })
+    
   },
 
   CancelModifiy() {
@@ -138,7 +141,7 @@ Page({
   
   onShareAppMessage(e) {
     if (e.type == 'submit') {
-      this.getQuestionId(e.detail.formId);
+      this.getQuestionId(e.detail.formId)
     }
     let path
     if (this.data.questionChanged) {
@@ -151,6 +154,11 @@ Page({
       imageUrl: this.data.shareimagePath,
       path,
     }
+  },
+  go2welcome() {
+    wx.navigateTo({
+      url: `/pages/welcome/index`
+    })
   },
   go2receive() {
     wx.navigateTo({

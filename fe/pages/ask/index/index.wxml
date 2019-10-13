@@ -3,7 +3,7 @@
   <Nav isShow='{{false}}'></Nav>
   <view class="public-top">
     <view class='public-top_bg'></view>
-    <view class='warn_info' bindtap='go2receive'>
+    <view class='warn_info' bindtap='go2receive' wx:if='{{memberId}}'>
       <image class='warn_icon' src='/images/warn.png'></image>
       <view class='warn_message'>{{totalMessage > 99 ? '99+' : totalMessage}}</view>
     </view>
@@ -28,17 +28,25 @@
       <textarea placeholder="这里是要编辑的问题" value="{{questionChanged}}" focus="{{focus}}" show-confirm-bar='false' bindblur='changeContent'></textarea>
     </modal>
     <view class='public-bottom send_buttons'>
-      <button class='public-btn bg-gray' open-type="share" formType="submit">
+      <button class='public-btn bg-gray' open-type="share" formType="submit" wx:if='{{memberId}}'>
         <image src='/images/weixin.png' class='public-icon' />
         <text class='public-icon_text'>发微信群</text>
       </button>
-      <picker style='display: inline-block' range='{{chooseList}}' value='{{chooseType}}' bindchange='bindPickerChange'>
+      <button class='public-btn bg-gray' wx:if='{{!memberId}}' bindtap='go2welcome'>
+        <image src='/images/weixin.png' class='public-icon' />
+        <text class='public-icon_text'>发微信群</text>
+      </button>
+      <picker style='display: inline-block' range='{{chooseList}}' value='{{chooseType}}' bindchange='bindPickerChange' wx:if='{{memberId}}'>
         <button class='public-btn bg-yellow'>
           <image src='/images/pengyouquan.png' class='public-icon' />
           <text class='public-icon_text'>发朋友圈</text>
         </button>
       </picker>
-      <navigator url="/pages/feedback/index" class='public_link'>有好点子，给我们提意见</navigator>
+      <button class='public-btn bg-yellow' wx:if='{{!memberId}}' bindtap='go2welcome'>
+        <image src='/images/pengyouquan.png' class='public-icon' />
+        <text class='public-icon_text'>发朋友圈</text>
+      </button>
+      <navigator url="/pages/feedback/index" class='public_link' wx:if='{{memberId}}'>有好点子，给我们提意见</navigator>
     </view>
   </view>
 </form>

@@ -73,20 +73,31 @@ Page({
       })
     }
   },
+  
   getUserInfo() {
-    wx.getUserInfo({
-      success: res => {
-        // 可以将 res 发送给后台解码出 unionId
-        wx.setStorageSync('userInfo', {
-          ...res.userInfo,
-          encryptedData: res.encryptedData,
-          iv: res.iv
-        });
-        this.setData({
-          // showPhone: true
-          showPhone: false
-        })
-        this.getPhoneNumber()
+    let me = this
+    wx.login({
+      success(res) {
+        if (res.code) {
+          utils.requestApi(`member/auth?authCode=${res.code}`).then(data => {
+            wx.getUserInfo({
+              success: res => {
+                wx.setStorageSync('memberId', data);
+                // 可以将 res 发送给后台解码出 unionId
+                wx.setStorageSync('userInfo', {
+                  ...res.userInfo,
+                  encryptedData: res.encryptedData,
+                  iv: res.iv
+                });
+                me.setData({
+                  // showPhone: true
+                  showPhone: false
+                })
+                me.getPhoneNumber()
+              }
+            })
+          })
+        }
       }
     })
   }

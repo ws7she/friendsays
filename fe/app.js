@@ -27,6 +27,7 @@ App({
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           this.showFirst = false;
+          wx.setStorageSync('memberId', memberId);
           wx.getUserInfo({
             success: res => {
               this.globalData.userInfo = res.userInfo;
@@ -44,9 +45,9 @@ App({
             }
           })
         } else {
-          wx.redirectTo({
-            url: '/pages/welcome/index',
-          })
+          // wx.redirectTo({
+          //   url: '/pages/welcome/index',
+          // })
         }
       }
     })
@@ -57,7 +58,6 @@ App({
       success(res) {
         if (res.code) {
           requestApi(`member/auth?authCode=${res.code}`).then(data => {
-            wx.setStorageSync('memberId', data);
             me.getUserInfo(option, data);
           })
         }

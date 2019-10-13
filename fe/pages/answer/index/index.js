@@ -19,7 +19,8 @@ Page({
     tagStatus: true,
     show: false,
     askUserId: '',
-    choose_list: []
+    choose_list: [],
+    memberId: wx.getStorageSync('memberId')
   },
   onLoad: function(options) {
     let me = this;
@@ -164,8 +165,17 @@ Page({
       content: e.detail.value
     })
   },
+  go2welcome() {
+    wx.navigateTo({
+      url: `/pages/welcome/index`
+    })
+  },
   //模板消息
   sendAnswer(event) {
+    if (!wx.getStorageSync('memberId')) {
+      this.go2welcome();
+      return;
+    }
     let memberId = wx.getStorageSync('memberId');
     let tagIds = this.data.choose_list;
     if (this.data.content.trim() === '') {
@@ -183,19 +193,26 @@ Page({
       })
     } else {
       // 模版消息
-      const formId = `${event.detail.formId}`;
-      utils.requestApi('answer/save', {
+      utils.requestApi('question/msgCheck', {
         method: 'POST',
         data: {
-          content: this.data.content,
-          memberId: memberId,
-          questionId: this.data.questionId,
-          tagIds: tagIds,
-          tagStatus: this.data.tagStatus ? 1 : 0,
+          "content": this.data.content,
         }
-      }).then(res => {
-        wx.navigateTo({
-          url: '/pages/ask/success/index',
+      }).then(() => {
+        const formId = `${event.detail.formId}`;
+        utils.requestApi('answer/save', {
+          method: 'POST',
+          data: {
+            content: this.data.content,
+            memberId: memberId,
+            questionId: this.data.questionId,
+            tagIds: tagIds,
+            tagStatus: this.data.tagStatus ? 1 : 0,
+          }
+        }).then(res => {
+          wx.navigateTo({
+            url: '/pages/ask/success/index',
+          })
         })
       })
     }
